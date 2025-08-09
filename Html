@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>شنسوي الويكند؟ | الكويت</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1f16;--panel:#0f2b1e;--accent:#00a38b;--accent-2:#11c8aa;
+      --text:#fff;--muted:#cde7df22;--chip:#134233;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:'Tajawal',system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+      background: radial-gradient(1200px 600px at 50% -10%, #0f3a2b 0%, #0b1f16 45%, #08140f 100%);
+      color:var(--text);display:flex;align-items:center;justify-content:center;padding:18px;
+    }
+    .container{width:min(100%,940px);background:linear-gradient(180deg,#103222,#0b2219);
+      border:1px solid #1d5745;border-radius:18px;box-shadow:0 20px 50px #0006,inset 0 1px 0 #3fe0c433;padding:20px 18px;}
+    header{display:flex;align-items:center;gap:12px;padding:10px 8px 0;flex-wrap:wrap}
+    .logo{width:54px;height:54px;border-radius:12px;background:conic-gradient(from 220deg,#10b39a,#0a7d6b,#10b39a);
+      display:grid;place-items:center;color:#01251e;font-weight:800;box-shadow:0 8px 30px #10b39a55}
+    h1{font-size:1.6rem;margin:0}
+    p.lead{opacity:.9;margin:.2rem 0 .8rem}
+    .progress{height:10px;background:#0a1a14;border-radius:6px;overflow:hidden;margin:10px 0 18px;border:1px solid #0e3b2e}
+    .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .4s ease}
+    .card{background:rgba(7,22,17,.6);border:1px solid #194d3d;border-radius:16px;padding:16px;margin:8px 0 2px}
+    .question{font-size:1.25rem;font-weight:800;margin:2px 0 8px}
+    .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:12px}
+    .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border-radius:12px;border:1px solid #145544;
+      background:linear-gradient(180deg,#113c2f,#0f3126);color:var(--text);cursor:pointer;user-select:none;
+      transition:transform .08s ease,box-shadow .2s ease,border-color .2s ease;text-align:center;font-weight:700}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 18px #0008;border-color:#1aa78f}
+    .pill{display:inline-block;background:var(--chip);border:1px solid #1a5d4b;padding:.35rem .6rem;border-radius:999px;font-size:.88rem;margin:.15rem .25rem}
+    .result{display:grid;gap:12px;margin-top:8px}
+    .result-hero{background:linear-gradient(120deg,#0e3a2c,#0a2a20);border:1px solid #1b5b49;border-radius:14px;padding:14px}
+    .result-hero h2{margin:.1rem 0 .35rem;font-size:1.25rem}
+    .grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+    .mini{background:#0a1c15;border:1px solid #164a3a;border-radius:12px;padding:10px}
+    .muted{opacity:.85}
+    .row{display:flex;gap:8px;flex-wrap:wrap}
+    .footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .link{font-weight:700;color:#8ef2df;text-decoration:none;border-bottom:1px dashed #3fe0c4}
+    .start{margin-top:14px;font-size:1.05rem;padding:13px 18px}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <div class="logo">WK</div>
+      <div>
+        <h1>شنسوي الويكند؟</h1>
+        <p class="lead">فلتر بسيط باللهجة الكويتية يطلع لك اقتراح يليق بمودك.</p>
+      </div>
+    </header>
+
+    <div class="progress"><div id="bar" class="bar"></div></div>
+
+    <section id="app" class="card"></section>
+  </main>
+
+  <script>
+    // ========== الأسئلة ==========
+    const steps = [
+      {
+        id: "Q1",
+        text: "معاك أطفال؟",
+        options: [
+          { label: "إي", set: { audience: "kidsOrFamily" }, next: "Q2" },
+          { label: "لأ", set: { audience: "adults" }, next: "Q2" },
+        ],
+      },
+      {
+        id: "Q2",
+        text: "حابين تاكلون ولا تسوّون شي وناسة؟",
+        options: [
+          { label: "أكل", set: { kind: "food" }, next: "QF1" },
+          { label: "وناسة", set: { kind: "activity" }, next: "QA1" },
+        ],
+      },
+      // ---- فرع الأكل ----
+      {
+        id: "QF1",
+        text: "شنو تشتهون؟",
+        options: [
+          { label: "برجر 🍔", set: { cuisine: "burger" }, next: "QF2" },
+          { label: "بيتزا 🍕", set: { cuisine: "pizza" }, next: "QF2" },
+          { label: "ستيك 🥩", set: { cuisine: "steak" }, next: "QF2" },
+          { label: "بحري 🐟", set: { cuisine: "seafood" }, next: "QF2" },
+          { label: "سوشي 🍣", set: { cuisine: "sushi" }, next: "QF2" },
+          { label: "إيطالي 🍝", set: { cuisine: "italian" }, next: "QF2" },
+          { label: "هندي 🍛", set: { cuisine: "indian" }, next: "QF2" },
+          { label: "مكسيكي 🌮", set: { cuisine: "mexican" }, next: "QF2" },
+          { label: "فطور 🥐", set: { cuisine: "breakfast" }, next: "QF2" },
+          { label: "حلويات/قهوة ☕️", set: { cuisine: "dessert" }, next: "QF2" },
+        ],
+      },
+      {
+        id: "QF2",
+        text: "الميزانية شلونها؟",
+        options: [
+          { label: "خفيف", set: { budget: "low" }, next: "RESULT" },
+          { label: "متوسط", set: { budget: "mid" }, next: "RESULT" },
+          { label: "فاخر", set: { budget: "high" }, next: "RESULT" },
+        ],
+      },
+      // ---- فرع الوناسة ----
+      {
+        id: "QA1",
+        text: "تبون داخل ولا برّا ولا بحر؟",
+        options: [
+          { label: "داخل 🏟️", set: { place: "indoor" }, next: "QA2" },
+          { label: "برّا 🌳", set: { place: "outdoor" }, next: "QA2" },
+          { label: "بحر 🌊", set: { place: "sea" }, next: "QA2" },
+        ],
+      },
+      {
+        id: "QA2",
+        text: "المود؟",
+        options: [
+          { label: "هادي 😌", set: { energy: "chill" }, next: "QA3" },
+          { label: "نص نص 🙂", set: { energy: "medium" }, next: "QA3" },
+          { label: "أكشن 😤", set: { energy: "action" }, next: "QA3" },
+        ],
+      },
+      {
+        id: "QA3",
+        text: "الصحبة؟",
+        options: [
+          { label: "عائلة 👨‍👩‍👧‍👦", set: { vibe: "family" }, next: "RESULT" },
+          { label: "قروب ربع 👥", set: { vibe: "group" }, next: "RESULT" },
+          { label: "ثنائي 💑", set: { vibe: "couple" }, next: "RESULT" },
+          { label: "سولو 🧍", set: { vibe: "solo" }, next: "RESULT" },
+        ],
+      },
+    ];
+
+    // ========== 100 خيار (مولّدين + يدوي) ==========
+    const activities = [];
+
+    // Food generators (حوالي 40)
+    function addFood(nameBase, tag, audience = "any", counts = [2,2,2]) {
+      // counts: [low, mid, high]
+      for (let i=0;i<counts[0];i++) activities.push({name:`${nameBase} (${i+1})`, kind:"food", tags:[tag], budget:"low", audience});
+      for (let i=0;i<counts[1];i++) activities.push({name:`${nameBase} (${counts[0]+i+1})`, kind:"food", tags:[tag], budget:"mid", audience});
+      for (let i=0;i<counts[2];i++) activities.push({name:`${nameBase} (${counts[0]+counts[1]+i+1})`, kind:"food", tags:[tag], budget:"high", audience});
+    }
+    addFood("مطعم برجر", "burger", "any", [2,2,2]);
+    addFood("مطعم بيتزا", "pizza", "family", [2,2,1]);
+    addFood("ستيك هاوس", "steak", "adults", [0,2,2]);
+    addFood("مطعم بحري", "seafood", "any", [1,2,1]);
+    addFood("مطعم سوشي", "sushi", "adults", [0,2,1]);
+    addFood("مطعم إيطالي", "italian", "any", [1,2,1]);
+    addFood("مطعم هندي", "indian", "any", [2,2,0]);
+    addFood("مطعم مكسيكي", "mexican", "adults", [1,1,0]);
+    addFood("كافيه فطور", "breakfast", "any", [2,2,0]);
+    addFood("حلويات وقهوة", "dessert", "any", [2,0,0]);
+
+    // Activities (حوالي 60)
+    const actSeed = [
+      // Kids/Family indoor
+      {name:"ترامبولين بارك",aud:"kidsOrFamily",tags:["indoor","medium","group"]},
+      {name:"ملاهي داخلية",aud:"kidsOrFamily",tags:["indoor","medium","family"]},
+      {name:"سينما كرتون",aud:"kidsOrFamily",tags:["indoor","chill","family"]},
+      {name:"ورشة رسم للأطفال",aud:"kidsOrFamily",tags:["indoor","chill","family"]},
+      {name:"متحف العلوم",aud:"kidsOrFamily",tags:["indoor","chill","family"]},
+      {name:"ملعب كرة أطفال",aud:"kidsOrFamily",tags:["indoor","medium","group"]},
+      {name:"بولينج عائلي",aud:"kidsOrFamily",tags:["indoor","medium","family"]},
+      // Kids/Family outdoor/sea
+      {name:"حديقة عامة وممشى",aud:"kidsOrFamily",tags:["outdoor","chill","family"]},
+      {name:"منتزه مائي",aud:"kidsOrFamily",tags:["outdoor","action","family","sea"]},
+      {name:"مزرعة تفاعلية",aud:"kidsOrFamily",tags:["outdoor","chill","family"]},
+      {name:"ركوب خيل للأطفال",aud:"kidsOrFamily",tags:["outdoor","medium","family"]},
+      {name:"رحلة دراجات",aud:"kidsOrFamily",tags:["outdoor","medium","group"]},
+      {name:"حديقة الفراشات",aud:"kidsOrFamily",tags:["outdoor","chill","family"]},
+      {name:"شاطئ للعائلات",aud:"kidsOrFamily",tags:["outdoor","chill","sea","family"]},
+
+      // Adults indoor
+      {name:"غرفة الهروب",aud:"adults",tags:["indoor","medium","group"]},
+      {name:"بولينج للكبار",aud:"adults",tags:["indoor","medium","group"]},
+      {name:"بلياردو",aud:"adults",tags:["indoor","chill","group"]},
+      {name:"ليلة كاريوكي",aud:"adults",tags:["indoor","medium","group"]},
+      {name:"حفلة موسيقية",aud:"adults",tags:["indoor","medium","couple","group"]},
+      {name:"مسرحية كوميدية",aud:"adults",tags:["indoor","chill","couple","group"]},
+      {name:"ليلة ألعاب لوحية",aud:"adults",tags:["indoor","chill","group"]},
+      {name:"معرض فني داخلي",aud:"adults",tags:["indoor","chill","solo","couple"]},
+
+      // Adults outdoor/land
+      {name:"كشتة بر",aud:"adults",tags:["outdoor","chill","group"]},
+      {name:"هايك خفيف",aud:"adults",tags:["outdoor","medium","group","solo"]},
+      {name:"تسلق صخور",aud:"adults",tags:["outdoor","action","group"]},
+      {name:"جولة تراثية",aud:"adults",tags:["outdoor","chill","couple","solo"]},
+      {name:"سوق المباركية",aud:"any",tags:["outdoor","chill","group","family"]},
+      {name:"بازار شعبي",aud:"any",tags:["outdoor","chill","group","family"]},
+      {name:"ماراثون مشي",aud:"adults",tags:["outdoor","medium","solo","group"]},
+      {name:"جولة بالدراجة",aud:"adults",tags:["outdoor","medium","solo","group"]},
+
+      // Sea
+      {name:"استئجار يخت",aud:"adults",tags:["sea","chill","couple","group"]},
+      {name:"جولة بحرية",aud:"any",tags:["sea","chill","family","group"]},
+      {name:"جت سكي",aud:"adults",tags:["sea","action","group"]},
+      {name:"رحلة غوص",aud:"adults",tags:["sea","action","group"]},
+      {name:"كاياك/تجديف",aud:"adults",tags:["sea","medium","couple","group","solo"]},
+
+      // Chill / wellness
+      {name:"يوم سبا",aud:"adults",tags:["indoor","chill","solo","couple"]},
+      {name:"جلسة يوغا/تأمل",aud:"any",tags:["indoor","chill","solo","couple"]},
+
+      // Seasonal / mixed
+      {name:"سينما هواء طلق",aud:"adults",tags:["outdoor","chill","couple","group"]},
+      {name:"حفل شواء على البحر",aud:"any",tags:["outdoor","medium","sea","group","family"]},
+      {name:"ورشة طبخ",aud:"any",tags:["indoor","medium","group","family"]},
+      {name:"ألعاب أركيد",aud:"any",tags:["indoor","medium","group","family"]},
+      {name:"تجربة VR",aud:"any",tags:["indoor","medium","group","family"]},
+      {name:"كارتنج داخلي",aud:"adults",tags:["indoor","action","group"]},
+      {name:"متحف تاريخي",aud:"any",tags:["indoor","chill","solo","family"]},
+      {name:"نزهة الكورنيش",aud:"any",tags:["outdoor","chill","sea","couple","family"]},
+      {name:"جولة تصوير ليلية",aud:"any",tags:["outdoor","chill","solo","group"]},
+      {name:"ليلة نجوم في البر",aud:"any",tags:["outdoor","chill","solo","group"]},
+      {name:"سوق حرف يدوية",aud:"any",tags:["outdoor","chill","family","group"]},
+      {name:"حديقة بحرية للمشي",aud:"any",tags:["outdoor","chill","sea","family"]},
+    ];
+    actSeed.forEach(a=>activities.push({name:a.name, kind:"activity", audience:a.aud, tags:a.tags}));
+
+    // نكمّل حتى نوصل 100 عنصر بعناوين عامة
+    while (activities.length < 100) {
+      const i = activities.length + 1;
+      const kinds = [["indoor","chill"],["outdoor","medium"],["sea","action"]];
+      const pick = kinds[i % kinds.length];
+      activities.push({
+        name: `نشاط عام رقم ${i}`,
+        kind: "activity",
+        audience: i%3===0?"kidsOrFamily":(i%3===1?"adults":"any"),
+        tags: pick
+      });
+    }
+
+    // ========== الحالة والمنطق ==========
+    const state = { answers:{}, path:[] };
+    const app = document.getElementById("app");
+    const bar = document.getElementById("bar");
+
+    function setProgress(){
+      const total = 5; // تقدير بسيط
+      const pct = Math.min(100,(state.path.length/total)*100);
+      bar.style.width = pct+"%";
+    }
+
+    function start(){
+      state.answers = {};
+      state.path = [];
+      renderOpen();
+      setProgress();
+    }
+
+    function renderOpen(){
+      app.innerHTML = `
+        <div style="text-align:center">
+          <div class="question">جاهزين؟</div>
+          <div class="row" style="justify-content:center">
+            <span class="pill">فلترة سريعة</span>
+            <span class="pill">نتيجة ذكيّة</span>
+            <span class="pill">ستايل كويتي</span>
+          </div>
+          <button class="btn start" id="startBtn">يلا نبدأ</button>
+          <div class="muted" style="margin-top:8px;font-size:.95rem">خذ ٣٠ ثانية ونعطيك اقتراح لطيف لمودك.</div>
+        </div>`;
+      document.getElementById("startBtn").onclick = ()=> renderStep("Q1");
+    }
+
+    function renderStep(id){
+      const step = steps.find(s=>s.id===id);
+      if(!step) return;
+      state.path.push(id); setProgress();
+
+      app.innerHTML = "";
+      const $wrap = document.createElement("div");
+
+      const $q = document.createElement("div");
+      $q.className="question"; $q.textContent = step.text;
+      $wrap.appendChild($q);
+
+      const $opts = document.createElement("div");
+      $opts.className="options";
+
+      step.options.forEach(opt=>{
+        const $b = document.createElement("button");
+        $b.className="btn";
+        $b.textContent = opt.label;
+        $b.onclick = ()=>{
+          // سجّل الإجابة
+          Object.assign(state.answers, opt.set || {});
+          // التالي
+          if(opt.next === "RESULT"){ renderResult(); }
+          else { renderStep(opt.next); }
+        };
+        $opts.appendChild($b);
+      });
+
+      $wrap.appendChild($opts);
+      app.appendChild($wrap);
+    }
+
+    // مطابقة مرنة
+    function matchFood(a){
+      const ans = state.answers;
+      if(a.kind !== "food") return false;
+      if(ans.cuisine && !(a.tags||[]).includes(ans.cuisine)) return false;
+      if(ans.budget && a.budget !== ans.budget) return false;
+      if(ans.audience==="kidsOrFamily" && a.audience==="adults") return false;
+      return true;
+    }
+    function matchActivity(a){
+      const ans = state.answers;
+      if(a.kind !== "activity") return false;
+      // audience
+      if(ans.audience==="kidsOrFamily" && a.audience==="adults") return false;
+      if(ans.audience==="adults" && a.audience==="kidsOrFamily") return false;
+      // place / energy / vibe = تاغات مرنة
+      if(ans.place && !(a.tags||[]).includes(ans.place)) return false;
+      if(ans.energy && !(a.tags||[]).includes(ans.energy)) return false;
+      if(ans.vibe){
+        // family/group/couple/solo كلها تُعامل كتاغ
+        if(!(a.tags||[]).includes(ans.vibe)) return false;
+      }
+      return true;
+    }
+
+    function renderResult(){
+      // فلترة
+      const ans = state.answers;
+      let pool = [];
+      if(ans.kind === "food"){
+        pool = activities.filter(matchFood);
+        if(pool.length === 0){
+          // تساهل لو ما لقينا الميزانية بالضبط
+          pool = activities.filter(a=>a.kind==="food" && (a.tags||[]).includes(ans.cuisine));
+        }
+      } else {
+        pool = activities.filter(matchActivity);
+        if(pool.length === 0){
+          // أرحم المطابقة: بس نوع المكان
+          if(ans.place) pool = activities.filter(a=>a.kind==="activity" && (a.tags||[]).includes(ans.place));
+        }
+      }
+      // fallback أخير
+      if(pool.length === 0) pool = activities.slice(0,10);
+
+      const pick = pool[Math.floor(Math.random()*pool.length)];
+
+      app.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "result";
+
+      const hero = document.createElement("div");
+      hero.className = "result-hero";
+      hero.innerHTML = `
+        <h2>اقتراحنا لكم 👇</h2>
+        <div class="row">
+          <span class="pill">${ans.audience==="kidsOrFamily" ? "عائلة" : "كبار"}</span>
+          ${ans.kind ? `<span class="pill">${ans.kind==="food"?"أكل":"وناسة"}</span>` : ""}
+          ${ans.cuisine ? `<span class="pill">${ans.cuisine}</span>` : ""}
+          ${ans.budget ? `<span class="pill">ميزانية: ${ans.budget}</span>` : ""}
+          ${ans.place ? `<span class="pill">${ans.place}</span>` : ""}
+          ${ans.energy ? `<span class="pill">${ans.energy}</span>` : ""}
+          ${ans.vibe ? `<span class="pill">${ans.vibe}</span>` : ""}
+        </div>
+        <div class="mini" style="margin-top:8px">
+          <div class="muted">النشاط/المكان:</div>
+          <div style="font-weight:800;font-size:1.1rem">${pick.name}</div>
+        </div>
+      `;
+      box.appendChild(hero);
+
+      const more = document.createElement("div");
+      more.className = "grid";
+      const alt = pool.filter(p=>p!==pick).slice(0,3);
+      alt.forEach(x=>{
+        const m = document.createElement("div");
+        m.className = "mini";
+        m.innerHTML = `<div class="muted">خيارات مشابهة:</div><div style="font-weight:700">${x.name}</div>`;
+        more.appendChild(m);
+      });
+      if(alt.length) box.appendChild(more);
+
+      const actions = document.createElement("div");
+      actions.className = "footer-actions";
+      const again = document.createElement("button");
+      again.className = "btn"; again.textContent = "نعيد من أول؟";
+      again.onclick = start;
+      const tweak = document.createElement("button");
+      tweak.className = "btn"; tweak.textContent = "بدّل الاختيار";
+      tweak.onclick = ()=>renderStep("Q2");
+      actions.appendChild(again); actions.appendChild(tweak);
+
+      box.appendChild(actions);
+      app.appendChild(box);
+      state.path.push("RESULT"); setProgress();
+    }
+
+    // تشغيل
+    start();
+  </script>
+</body>
+</html>
