@@ -2,418 +2,347 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>شنسوي الويكند؟ | الكويت</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>شنسوي الويكند؟</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@700&family=Cairo:wght@400;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#070f0c; --glass:#0b1f16cc; --stroke:#2ed8be55;
-      --accent:#00f5c4; --accent2:#6ae7ff; --accent3:#b084ff;
-      --text:#fff; --chip:#143f32; --chip-stroke:#29c4ac55;
+      /* modern purple/indigo system */
+      --grad-1: linear-gradient(135deg,#ff6bd6 0%,#a06bff 45%,#4f46e5 100%);
+      --bg-1: #0b0a13;
+      --bg-2: #14122a;
+      --card: rgba(255,255,255,.06);
+      --card-strong: rgba(255,255,255,.10);
+      --text: #ffffff;
+      --muted: #cfc7ff;
+      --shadow: 0 20px 60px rgba(79,70,229,.35);
+      --radius: 18px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
-      margin:0; color:var(--text);
-      font-family:'Tajawal',system-ui,-apple-system,Segoe UI,Arial,sans-serif;
-      background: var(--bg);
-      overflow-x:hidden;
-    }
-
-    /* --- dynamic background: blurred photo + animated color blobs --- */
-    .bg, .bg::before, .bg::after{position:fixed;inset:0;z-index:-2}
-    .bg::before{
-      content:"";
+      margin:0;
       background:
-        linear-gradient(180deg, #0009, #0008),
-        url('https://images.unsplash.com/photo-1560177913-0e3a4a8f21c0?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-      filter: blur(12px) brightness(0.9) saturate(1.1);
-    }
-    .blob{position:fixed; width:44vmax; height:44vmax; border-radius:50%;
-      filter: blur(60px); opacity:.35; z-index:-1; mix-blend-mode:screen;
-      animation: float 16s ease-in-out infinite;}
-    .blob.b1{right:-10vmax; top:-6vmax; background:radial-gradient(closest-side, #00ffd9, transparent 60%); animation-delay:0s;}
-    .blob.b2{left:-12vmax; bottom:-8vmax; background:radial-gradient(closest-side, #9b6dff, transparent 60%); animation-delay:4s;}
-    .blob.b3{left:35vw; top:40vh; background:radial-gradient(closest-side, #66e2ff, transparent 60%); animation-delay:8s;}
-    @keyframes float{
-      0%,100%{transform:translate3d(0,0,0) scale(1)}
-      50%{transform:translate3d(0,-2vmax,0) scale(1.06)}
+        radial-gradient(1200px 600px at 20% -10%, #211c4a 0%, transparent 55%),
+        radial-gradient(900px 600px at 120% 10%, #2a0f2d 0%, transparent 50%),
+        var(--bg-1);
+      color:var(--text);
+      font-family: "Cairo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      display:flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 20px;
     }
 
-    /* --- layout --- */
-    .wrap{
-      min-height:100dvh; display:flex; align-items:center; justify-content:center; padding:24px;
-      background: radial-gradient(1200px 600px at 50% -10%, #0c3426aa 0%, transparent 45%);
-    }
-    .container{
-      width:min(100%, 980px);
-      backdrop-filter: blur(12px) saturate(1.1);
-      background:linear-gradient(180deg, #102820aa, #0b1f16a6);
-      border:1px solid var(--stroke);
-      border-radius:22px;
-      box-shadow:0 25px 70px #0009, inset 0 1px 0 #ffffff14;
-      padding:22px 18px;
-    }
+    .wrap{ width: min(960px, 100%); }
 
+    /* header */
     header{
-      display:flex; align-items:center; gap:12px; padding:6px 6px 0; flex-wrap:wrap
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      margin-bottom: 18px;
     }
-    .logo{
-      width:58px;height:58px;border-radius:16px;
-      background:conic-gradient(from 200deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
-      display:grid;place-items:center;color:#001f15;font-weight:900;
-      box-shadow:0 10px 30px #00f5c477, 0 0 0 1px #00f5c433 inset;
-      letter-spacing:2px;
+
+    .brand{
+      display:flex; align-items:center; gap:14px;
     }
-    h1{font-size:2rem;margin:.1rem 0 .2rem}
 
-    /* removed the old lead line entirely */
+    .logo{ width: 210px; height:auto; display:block; filter: drop-shadow(0 8px 24px rgba(155,92,255,.35)); }
 
-    .progress{height:12px;background:#06140f;border-radius:999px;overflow:hidden;margin:10px 0 18px;border:1px solid #0f493c}
-    .bar{height:100%;width:0;
-      background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));
-      box-shadow:0 0 20px #00f5c455 inset; transition:width .45s cubic-bezier(.2,.8,.2,1)}
+    /* title */
+    h1{
+      font-family: "Reem Kufi", system-ui;
+      font-size: clamp(28px, 4.2vw, 46px);
+      margin: 8px 0 4px;
+      line-height: 1.1;
+      letter-spacing: .2px;
+      text-shadow: 0 2px 0 rgba(0,0,0,.25);
+    }
+
+    /* progress */
+    .progress{
+      height: 8px;
+      background: var(--card);
+      border-radius: 999px;
+      overflow:hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+      margin: 10px 0 22px;
+    }
+    .progress > i{
+      display:block; height:100%; width:0%;
+      background: var(--grad-1);
+      box-shadow: var(--shadow);
+      transition: width .35s ease;
+    }
+
+    /* cards */
     .card{
-      background:var(--glass);
-      border:1px solid #1d574566;
-      border-radius:18px; padding:16px; margin:8px 0 2px;
-      box-shadow: 0 8px 24px #0006, inset 0 1px 0 #ffffff14;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      padding: 18px;
     }
-    .question{font-size:1.25rem;font-weight:800;margin:6px 0 10px}
+
+    .question{ font-size: clamp(18px, 2.8vw, 24px); margin: 6px 4px 14px; font-weight:700; }
+
     .options{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-      gap:12px;margin-top:12px
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
     }
-    .btn{
-      position:relative; isolation:isolate;
-      display:flex;align-items:center;justify-content:center;gap:8px;
-      padding:14px 16px;border-radius:14px;border:1px solid #1aa78f55;
-      background:linear-gradient(180deg,#123a2f,#0f2f26);
-      color:var(--text);cursor:pointer;user-select:none;font-weight:800;
-      transition:transform .08s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+
+    .opt{
+      border: 1px solid rgba(255,255,255,.14);
+      background: var(--card-strong);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      text-align:center;
+      user-select:none;
+    }
+    .opt:active{ transform: scale(.98); }
+    .opt:hover{ border-color: rgba(255,255,255,.30); }
+
+    /* result */
+    .result{ display:none; }
+    .result .title{
+      font-size: clamp(22px, 3.2vw, 28px);
+      font-weight: 800;
+      margin: 8px 0 12px;
+    }
+    .result .box{
+      background: var(--card-strong);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 14px;
+      padding: 18px;
+      font-size: 22px;
+      font-weight: 800;
       text-align:center;
     }
-    .btn::after{
-      content:""; position:absolute; inset:0; border-radius:14px; z-index:-1;
-      background:radial-gradient(120% 120% at 50% -20%, #00f5c433, transparent 40%),
-                 radial-gradient(120% 120% at 120% 140%, #6ae7ff22, transparent 40%);
-      transition:opacity .25s ease; opacity:.6
-    }
-    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px #0009, 0 0 0 1px #21ffd933 inset;border-color:#21ffd9aa}
-    .btn:active{transform:translateY(0)}
-    .pill{display:inline-block;background:linear-gradient(180deg,#113b30,#0e2f25);border:1px solid var(--chip-stroke);
-      padding:.4rem .7rem;border-radius:999px;font-size:.92rem;margin:.15rem .25rem}
+    .result small{ color: var(--muted); display:block; margin-top: 6px; }
 
-    .result{display:grid;gap:12px;margin-top:8px}
-    .result-hero{
-      background:linear-gradient(120deg, #0f3e31bb, #0a2a20cc);
-      border:1px solid #1b5b49; border-radius:16px; padding:16px
+    /* actions */
+    .actions{
+      display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:18px;
     }
-    .result-hero h2{margin:.1rem 0 .45rem;font-size:1.25rem}
-    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-    .mini{background:#0a1c15cc;border:1px solid #164a3a;border-radius:12px;padding:12px}
-    .muted{opacity:.85}
-    .footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .start{margin-top:14px;font-size:1.05rem;padding:13px 18px}
+    .btn{
+      border:none; cursor:pointer; font-size:16px; font-weight:800;
+      padding:12px 16px; border-radius:14px; min-width:160px;
+    }
+    .btn-primary{ background: var(--grad-1); color:#fff; box-shadow: var(--shadow); }
+    .btn-ghost{ background: transparent; color:#fff; border:1px solid rgba(255,255,255,.25); }
 
-    /* subtle entrance */
-    .fade-in{animation:fade .35s ease forwards; opacity:0; transform:translateY(6px)}
-    @keyframes fade{to{opacity:1; transform:none}}
+    /* utility */
+    .hide{ display:none !important; }
+
+    @media (min-width:768px){
+      .options{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    }
   </style>
 </head>
 <body>
-  <div class="bg"></div>
-  <div class="blob b1"></div>
-  <div class="blob b2"></div>
-  <div class="blob b3"></div>
-
   <div class="wrap">
-    <main class="container fade-in">
-      <header>
-        <div class="logo">WK</div>
-        <h1>شنسوي الويكند؟</h1>
-        <!-- intentionally no subtitle -->
-      </header>
+    <header>
+      <div class="brand">
+        <!-- NEW LOGO -->
+        <svg viewBox="0 0 420 160" class="logo" aria-label="شنسوي؟ by FAHAD">
+          <defs>
+            <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"  stop-color="#ff77c8"/>
+              <stop offset="55%" stop-color="#9b5cff"/>
+              <stop offset="100%" stop-color="#4f46e5"/>
+            </linearGradient>
+            <filter id="softGlow">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- rounded square frame -->
+          <rect x="8" y="8" rx="32" ry="32" width="144" height="144"
+                fill="none" stroke="url(#g)" stroke-width="16" filter="url(#softGlow)"/>
+          <!-- Arabic title -->
+          <text x="80" y="90" text-anchor="middle"
+                font-family="'Reem Kufi', system-ui" font-size="56"
+                fill="url(#g)">شنسوي؟</text>
+          <!-- by FAHAD (handwritten) -->
+          <text x="165" y="130"
+                font-family="'Caveat', cursive" font-size="52"
+                fill="url(#g)" style="letter-spacing:1px">by FAHAD</text>
+        </svg>
+      </div>
+    </header>
 
-      <div class="progress"><div id="bar" class="bar"></div></div>
-      <section id="app" class="card"></section>
-    </main>
+    <h1>شنسوي الويكند؟</h1>
+
+    <!-- progress -->
+    <div class="progress" aria-hidden="true"><i id="progBar"></i></div>
+
+    <!-- QUIZ CARD -->
+    <section id="quizCard" class="card">
+      <div id="qText" class="question">خلّنا نعرف مزاجك اليوم 👇</div>
+      <div id="options" class="options"></div>
+    </section>
+
+    <!-- RESULT CARD -->
+    <section id="resultCard" class="card result">
+      <div class="title">اقتراحنا لكم 👇</div>
+      <div class="box" id="finalTitle">—</div>
+      <small id="similarText" class="hide">خيارات مشابهة: <span id="similarList"></span></small>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="restartBtn">نعيد من أول؟</button>
+        <button class="btn btn-ghost" id="swapBtn">بدّل الاختيار</button>
+      </div>
+    </section>
   </div>
 
   <script>
-    /* ---------- Steps (Kuwaiti tone) ---------- */
-    const steps = [
+    // ===== DATA (tags used internally only — never shown) =====
+    const QUESTIONS = [
       {
-        id: "Q1",
-        text: "معاك أطفال؟",
+        text: "تحبها داخل ولا برا؟",
         options: [
-          { label: "إي", set: { audience: "kidsOrFamily" }, next: "Q2" },
-          { label: "لأ", set: { audience: "adults" }, next: "Q2" },
-        ],
+          { label: "Outdoor", tags: ["outdoor"] },
+          { label: "Indoor", tags: ["indoor"] },
+          { label: "ما يفرق", tags: ["flex"] }
+        ]
       },
       {
-        id: "Q2",
-        text: "حابين تاكلون ولا تسوّون شي وناسة؟",
+        text: "مزاجك لحالك أو جماعة؟",
         options: [
-          { label: "أكل", set: { kind: "food" }, next: "QF1" },
-          { label: "وناسة", set: { kind: "activity" }, next: "QA1" },
-        ],
-      },
-      // ---- Food branch
-      {
-        id: "QF1",
-        text: "شنو تشتهون؟",
-        options: [
-          { label: "برجر 🍔", set: { cuisine: "burger" }, next: "QF2" },
-          { label: "بيتزا 🍕", set: { cuisine: "pizza" }, next: "QF2" },
-          { label: "ستيك 🥩", set: { cuisine: "steak" }, next: "QF2" },
-          { label: "بحري 🐟", set: { cuisine: "seafood" }, next: "QF2" },
-          { label: "سوشي 🍣", set: { cuisine: "sushi" }, next: "QF2" },
-          { label: "إيطالي 🍝", set: { cuisine: "italian" }, next: "QF2" },
-          { label: "هندي 🍛", set: { cuisine: "indian" }, next: "QF2" },
-          { label: "مكسيكي 🌮", set: { cuisine: "mexican" }, next: "QF2" },
-          { label: "فطور 🥐", set: { cuisine: "breakfast" }, next: "QF2" },
-          { label: "حلويات/قهوة ☕️", set: { cuisine: "dessert" }, next: "QF2" },
-        ],
+          { label: "جماعة", tags: ["group"] },
+          { label: "لحالي", tags: ["solo"] },
+          { label: "قريبين فقط", tags: ["few"] }
+        ]
       },
       {
-        id: "QF2",
-        text: "الميزانية شلونها؟",
+        text: "الجهد؟",
         options: [
-          { label: "خفيف", set: { budget: "low" }, next: "RESULT" },
-          { label: "متوسط", set: { budget: "mid" }, next: "RESULT" },
-          { label: "فاخر", set: { budget: "high" }, next: "RESULT" },
-        ],
-      },
-      // ---- Fun branch
-      {
-        id: "QA1",
-        text: "تبون داخل ولا برّا ولا بحر؟",
-        options: [
-          { label: "داخل 🏟️", set: { place: "indoor" }, next: "QA2" },
-          { label: "برّا 🌳", set: { place: "outdoor" }, next: "QA2" },
-          { label: "بحر 🌊", set: { place: "sea" }, next: "QA2" },
-        ],
-      },
-      {
-        id: "QA2",
-        text: "المود؟",
-        options: [
-          { label: "هادي 😌", set: { energy: "chill" }, next: "QA3" },
-          { label: "نص نص 🙂", set: { energy: "medium" }, next: "QA3" },
-          { label: "أكشن 😤", set: { energy: "action" }, next: "QA3" },
-        ],
-      },
-      {
-        id: "QA3",
-        text: "الصحبة؟",
-        options: [
-          { label: "عائلة 👨‍👩‍👧‍👦", set: { vibe: "family" }, next: "RESULT" },
-          { label: "قروب ربع 👥", set: { vibe: "group" }, next: "RESULT" },
-          { label: "ثنائي 💑", set: { vibe: "couple" }, next: "RESULT" },
-          { label: "سولو 🧍", set: { vibe: "solo" }, next: "RESULT" },
-        ],
-      },
-    ];
-
-    /* ---------- Activities pool (≈100 items total) ---------- */
-    const activities = [];
-    function addFood(nameBase, tag, audience="any", counts=[2,2,2]){
-      for(let i=0;i<counts[0];i++) activities.push({name:`${nameBase} (${i+1})`, kind:"food", tags:[tag], budget:"low", audience});
-      for(let i=0;i<counts[1];i++) activities.push({name:`${nameBase} (${counts[0]+i+1})`, kind:"food", tags:[tag], budget:"mid", audience});
-      for(let i=0;i<counts[2];i++) activities.push({name:`${nameBase} (${counts[0]+counts[1]+i+1})`, kind:"food", tags:[tag], budget:"high", audience});
-    }
-    addFood("مطعم برجر","burger","any",[2,2,2]);
-    addFood("مطعم بيتزا","pizza","kidsOrFamily",[2,2,1]);
-    addFood("ستيك هاوس","steak","adults",[0,2,2]);
-    addFood("مطعم بحري","seafood","any",[1,2,1]);
-    addFood("مطعم سوشي","sushi","adults",[0,2,1]);
-    addFood("مطعم إيطالي","italian","any",[1,2,1]);
-    addFood("مطعم هندي","indian","any",[2,2,0]);
-    addFood("مطعم مكسيكي","mexican","adults",[1,1,0]);
-    addFood("كافيه فطور","breakfast","any",[2,2,0]);
-    addFood("حلويات وقهوة","dessert","any",[2,0,0]);
-
-    const actSeed = [
-      {name:"ترامبولين بارك",aud:"kidsOrFamily",tags:["indoor","medium","group"]},
-      {name:"ملاهي داخلية",aud:"kidsOrFamily",tags:["indoor","medium","family"]},
-      {name:"سينما كرتون",aud:"kidsOrFamily",tags:["indoor","chill","family"]},
-      {name:"ورشة رسم للأطفال",aud:"kidsOrFamily",tags:["indoor","chill","family"]},
-      {name:"متحف العلوم",aud:"kidsOrFamily",tags:["indoor","chill","family"]},
-      {name:"ملعب كرة أطفال",aud:"kidsOrFamily",tags:["indoor","medium","group"]},
-      {name:"حديقة عامة وممشى",aud:"kidsOrFamily",tags:["outdoor","chill","family"]},
-      {name:"منتزه مائي",aud:"kidsOrFamily",tags:["outdoor","action","family","sea"]},
-      {name:"مزرعة تفاعلية",aud:"kidsOrFamily",tags:["outdoor","chill","family"]},
-      {name:"شاطئ للعائلات",aud:"kidsOrFamily",tags:["outdoor","chill","sea","family"]},
-
-      {name:"غرفة الهروب",aud:"adults",tags:["indoor","medium","group"]},
-      {name:"بولينج للكبار",aud:"adults",tags:["indoor","medium","group"]},
-      {name:"بلياردو",aud:"adults",tags:["indoor","chill","group"]},
-      {name:"ليلة كاريوكي",aud:"adults",tags:["indoor","medium","group"]},
-      {name:"حفلة موسيقية",aud:"adults",tags:["indoor","medium","couple","group"]},
-      {name:"مسرحية كوميدية",aud:"adults",tags:["indoor","chill","couple","group"]},
-      {name:"معرض فني داخلي",aud:"adults",tags:["indoor","chill","solo","couple"]},
-
-      {name:"كشتة بر",aud:"adults",tags:["outdoor","chill","group"]},
-      {name:"هايك خفيف",aud:"adults",tags:["outdoor","medium","group","solo"]},
-      {name:"تسلق صخور",aud:"adults",tags:["outdoor","action","group"]},
-      {name:"جولة تراثية",aud:"adults",tags:["outdoor","chill","couple","solo"]},
-      {name:"سوق المباركية",aud:"any",tags:["outdoor","chill","group","family"]},
-      {name:"بازار شعبي",aud:"any",tags:["outdoor","chill","group","family"]},
-
-      {name:"استئجار يخت",aud:"adults",tags:["sea","chill","couple","group"]},
-      {name:"جولة بحرية",aud:"any",tags:["sea","chill","family","group"]},
-      {name:"جت سكي",aud:"adults",tags:["sea","action","group"]},
-      {name:"رحلة غوص",aud:"adults",tags:["sea","action","group"]},
-      {name:"كاياك/تجديف",aud:"adults",tags:["sea","medium","couple","group","solo"]},
-
-      {name:"يوم سبا",aud:"adults",tags:["indoor","chill","solo","couple"]},
-      {name:"جلسة يوغا/تأمل",aud:"any",tags:["indoor","chill","solo","couple"]},
-      {name:"سينما هواء طلق",aud:"adults",tags:["outdoor","chill","couple","group"]},
-      {name:"نزهة الكورنيش",aud:"any",tags:["outdoor","chill","sea","couple","family"]},
-      {name:"ألعاب أركيد",aud:"any",tags:["indoor","medium","group","family"]},
-      {name:"تجربة VR",aud:"any",tags:["indoor","medium","group","family"]},
-      {name:"كارتنج داخلي",aud:"adults",tags:["indoor","action","group"]},
-      {name:"متحف تاريخي",aud:"any",tags:["indoor","chill","solo","family"]},
-    ];
-    actSeed.forEach(a=>activities.push({name:a.name, kind:"activity", audience:a.aud, tags:a.tags}));
-
-    while(activities.length<100){
-      const i=activities.length+1;
-      const sets=[["indoor","chill"],["outdoor","medium"],["sea","action"]];
-      activities.push({name:`نشاط عام رقم ${i}`, kind:"activity",
-        audience: i%3===0?"kidsOrFamily":(i%3===1?"adults":"any"),
-        tags: sets[i%sets.length]});
-    }
-
-    /* ---------- State & Rendering ---------- */
-    const state={answers:{}, path:[]};
-    const app=document.getElementById("app");
-    const bar=document.getElementById("bar");
-
-    function setProgress(){
-      const total=5;
-      bar.style.width=Math.min(100,(state.path.length/total)*100)+"%";
-    }
-
-    function start(){
-      state.answers={}; state.path=[];
-      renderOpen(); setProgress();
-    }
-
-    function renderOpen(){
-      app.innerHTML=`
-        <div style="text-align:center">
-          <div class="question" style="font-size:1.35rem">جاهزين؟</div>
-          <div class="pill">ستايل جديد</div>
-          <div class="pill">فلترة سريعة</div>
-          <div class="pill">نتيجة ذكيّة</div>
-          <button class="btn start" id="startBtn">يلا نبدأ</button>
-        </div>`;
-      document.getElementById("startBtn").onclick=()=>renderStep("Q1");
-    }
-
-    function renderStep(id){
-      const step=steps.find(s=>s.id===id);
-      if(!step) return;
-      state.path.push(id); setProgress();
-
-      app.innerHTML="";
-      const q=document.createElement("div"); q.className="question"; q.textContent=step.text;
-      const opts=document.createElement("div"); opts.className="options";
-
-      step.options.forEach(opt=>{
-        const b=document.createElement("button");
-        b.className="btn"; b.textContent=opt.label;
-        b.onclick=()=>{
-          Object.assign(state.answers, opt.set||{});
-          if(opt.next==="RESULT") renderResult(); else renderStep(opt.next);
-        };
-        opts.appendChild(b);
-      });
-
-      app.appendChild(q); app.appendChild(opts);
-    }
-
-    function matchFood(a){
-      const ans=state.answers; if(a.kind!=="food") return false;
-      if(ans.cuisine && !(a.tags||[]).includes(ans.cuisine)) return false;
-      if(ans.budget && a.budget!==ans.budget) return false;
-      if(ans.audience==="kidsOrFamily" && a.audience==="adults") return false;
-      return true;
-    }
-    function matchActivity(a){
-      const ans=state.answers; if(a.kind!=="activity") return false;
-      if(ans.audience==="kidsOrFamily" && a.audience==="adults") return false;
-      if(ans.audience==="adults" && a.audience==="kidsOrFamily") return false;
-      if(ans.place && !(a.tags||[]).includes(ans.place)) return false;
-      if(ans.energy && !(a.tags||[]).includes(ans.energy)) return false;
-      if(ans.vibe && !(a.tags||[]).includes(ans.vibe)) return false;
-      return true;
-    }
-
-    function renderResult(){
-      const ans=state.answers;
-      let pool=[];
-      if(ans.kind==="food"){
-        pool=activities.filter(matchFood);
-        if(!pool.length) pool=activities.filter(a=>a.kind==="food" && (a.tags||[]).includes(ans.cuisine));
-      }else{
-        pool=activities.filter(matchActivity);
-        if(!pool.length && ans.place) pool=activities.filter(a=>a.kind==="activity" && (a.tags||[]).includes(ans.place));
+          { label: "خفيف", tags: ["light"] },
+          { label: "متوسط", tags: ["medium"] },
+          { label: "ثقيل", tags: ["intense"] }
+        ]
       }
-      if(!pool.length) pool=activities.slice(0,10);
+    ];
 
-      const pick=pool[Math.floor(Math.random()*pool.length)];
-      app.innerHTML="";
+    const ACTIVITIES = [
+      { title: "رحلة دراجات", tags: ["outdoor","group","medium"] },
+      { title: "حفلة شواء على البحر", tags: ["outdoor","group","light"] },
+      { title: "كوفي وボード جيمز", tags: ["indoor","group","light"] },
+      { title: "سينما + عشاء", tags: ["indoor","few","light"] },
+      { title: "تريك خفيف في الصباحية", tags: ["outdoor","few","medium"] },
+      { title: "سبا و مساج", tags: ["indoor","solo","light"] },
+      { title: "تنس/بادل", tags: ["outdoor","few","intense"] },
+      { title: "متحف + كافيه", tags: ["indoor","few","light"] },
+      { title: "تمشى في الشاطئ", tags: ["outdoor","solo","light"] },
+      { title: "تخييم قريب", tags: ["outdoor","group","medium"] }
+    ];
 
-      const wrap=document.createElement("div"); wrap.className="result";
-      const hero=document.createElement("div"); hero.className="result-hero";
-      hero.innerHTML=`
-        <h2>اقتراحنا لكم 👇</h2>
-        <div class="pill">${ans.audience==="kidsOrFamily"?"عائلة":"كبار"}</div>
-        ${ans.kind?`<span class="pill">${ans.kind==="food"?"أكل":"وناسة"}</span>`:""}
-        ${ans.cuisine?`<span class="pill">${ans.cuisine}</span>`:""}
-        ${ans.budget?`<span class="pill">ميزانية: ${ans.budget}</span>`:""}
-        ${ans.place?`<span class="pill">${ans.place}</span>`:""}
-        ${ans.energy?`<span class="pill">${ans.energy}</span>`:""}
-        ${ans.vibe?`<span class="pill">${ans.vibe}</span>`:""}
-        <div class="mini" style="margin-top:10px">
-          <div class="muted">النشاط/المكان:</div>
-          <div style="font-weight:900;font-size:1.15rem">${pick.name}</div>
-        </div>`;
-      wrap.appendChild(hero);
+    // ===== STATE =====
+    let step = 0;
+    let chosenTags = new Set();
 
-      const grid=document.createElement("div"); grid.className="grid";
-      pool.filter(p=>p!==pick).slice(0,3).forEach(x=>{
-        const m=document.createElement("div"); m.className="mini";
-        m.innerHTML=`<div class="muted">خيار مشابه:</div><div style="font-weight:800">${x.name}</div>`;
-        grid.appendChild(m);
-      });
-      if(grid.children.length) wrap.appendChild(grid);
+    const qText = document.getElementById('qText');
+    const optionsBox = document.getElementById('options');
+    const quizCard = document.getElementById('quizCard');
+    const resultCard = document.getElementById('resultCard');
+    const finalTitle = document.getElementById('finalTitle');
+    const similarText = document.getElementById('similarText');
+    const similarList = document.getElementById('similarList');
+    const progBar = document.getElementById('progBar');
 
-      const actions=document.createElement("div"); actions.className="footer-actions";
-      const again=document.createElement("button"); again.className="btn"; again.textContent="نعيد من أول؟"; again.onclick=start;
-      const tweak=document.createElement("button"); tweak.className="btn"; tweak.textContent="بدّل الاختيار"; tweak.onclick=()=>renderStep("Q2");
-      actions.appendChild(again); actions.appendChild(tweak);
-      wrap.appendChild(actions);
-
-      app.appendChild(wrap);
-      state.path.push("RESULT"); setProgress();
+    function updateProgress(){
+      const pct = (step / QUESTIONS.length) * 100;
+      progBar.style.width = Math.max(4, pct) + '%';
     }
 
-    // Boot
-    (function initTouchSheen(){
-      // tiny pointer sheen on buttons
-      document.addEventListener('pointermove', e=>{
-        document.querySelectorAll('.btn').forEach(b=>{
-          const r=b.getBoundingClientRect();
-          const x=e.clientX - r.left, y=e.clientY - r.top;
-          b.style.setProperty('--x', x+'px'); b.style.setProperty('--y', y+'px');
-        });
+    function renderQuestion(){
+      const q = QUESTIONS[step];
+      qText.textContent = q.text;
+      optionsBox.innerHTML = '';
+      q.options.forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'opt';
+        b.type = 'button';
+        b.textContent = opt.label;
+        b.onclick = () => choose(opt.tags);
+        optionsBox.appendChild(b);
       });
-    })();
-    start();
+      updateProgress();
+    }
+
+    function choose(tags){
+      tags.forEach(t => chosenTags.add(t));
+      step++;
+      if(step >= QUESTIONS.length){
+        showResult();
+      } else {
+        renderQuestion();
+      }
+    }
+
+    // scoring by tag overlap
+    function bestMatch(list, wantTags){
+      const scored = list.map(item => {
+        const score = item.tags.reduce((acc,t)=> acc + (wantTags.has(t)?1:0), 0);
+        return { item, score };
+      }).sort((a,b)=> b.score - a.score);
+      return scored;
+    }
+
+    function showResult(){
+      // compute
+      const ranked = bestMatch(ACTIVITIES, chosenTags);
+      const top = ranked[0]?.item || { title:"اِطلعوا تتمشون ✨" };
+      finalTitle.textContent = top.title;
+
+      // similar (2–3 more)
+      const alts = ranked.slice(1,4).map(r => r.item.title);
+      if(alts.length){
+        similarList.textContent = alts.join(" • ");
+        similarText.classList.remove('hide');
+      }else{
+        similarText.classList.add('hide');
+      }
+
+      // swap views (NO TAGS/KEYWORDS ARE SHOWN)
+      quizCard.classList.add('hide');
+      resultCard.style.display = 'block';
+      progBar.style.width = '100%';
+    }
+
+    function restart(){
+      step = 0;
+      chosenTags = new Set();
+      resultCard.style.display = 'none';
+      quizCard.classList.remove('hide');
+      renderQuestion();
+    }
+
+    // swap = just pick next best suggestion
+    function swap(){
+      // rotate ACTIVITIES order by moving first to end then recompute
+      ACTIVITIES.push(ACTIVITIES.shift());
+      showResult();
+    }
+
+    document.getElementById('restartBtn').onclick = restart;
+    document.getElementById('swapBtn').onclick = swap;
+
+    // init
+    renderQuestion();
   </script>
 </body>
 </html>
