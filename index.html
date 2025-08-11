@@ -2,37 +2,53 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>شنسوي الويكند؟ — مُرشِّح الأنشطة</title>
 <style>
 :root{
   --bg1:#0f1022; --bg2:#132b38;
-  --glass:rgba(255,255,255,.08); --stroke:rgba(255,255,255,.16);
+  --panel:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.14);
   --text:#fff; --muted:#cfd8dc;
-  --accent:#ff2bd1; --accent2:#7c3aed; /* neon pink → purple */
+  --accent:#ff2bd1; --accent2:#7c3aed;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0; color:var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Kufi Arabic", "Noto Sans", Arial, sans-serif;
+  margin:0; color:var(--text);
+  -webkit-text-size-adjust:100%;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Kufi Arabic", "Noto Sans", Arial, sans-serif;
   background:
     radial-gradient(1200px 1200px at 10% -10%, #1e1b4b 0%, transparent 60%),
     radial-gradient(900px 900px at 110% 10%, #0ea5e9 0%, transparent 50%),
     linear-gradient(160deg,var(--bg1),var(--bg2));
-  display:flex; align-items:center; justify-content:center;
-  padding:18px; padding-bottom:calc(18px + env(safe-area-inset-bottom));
+  min-height:100vh;            /* fallback */
+  min-height:100svh;           /* iOS safe, avoids toolbar jump */
+  -webkit-overflow-scrolling:touch;
+  overflow-x:hidden;
+  padding:16px 12px;
+  padding-top:calc(16px + env(safe-area-inset-top));
+  padding-bottom:calc(16px + env(safe-area-inset-bottom));
 }
-.app{width:min(1100px,100%)}
-.glass{
-  background:var(--glass); border:1px solid var(--stroke); backdrop-filter: blur(14px);
-  box-shadow:0 10px 40px rgba(0,0,0,.35); border-radius:24px; overflow:hidden;
+.app{
+  width:100%;
+  max-width:720px;             /* fills iPhone nicely */
+  margin-inline:auto;
+  background:var(--panel);
+  border:1px solid var(--stroke);
+  border-radius:22px;
+  box-shadow:0 10px 32px rgba(0,0,0,.35);
+  overflow:hidden;
 }
-header{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px}
+header{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:12px 14px;
+}
 .brand{display:flex; align-items:center; gap:10px}
-.logoimg{height:46px; width:auto; display:block; filter: drop-shadow(0 0 10px rgba(255,43,209,.35))}
-.title{font-weight:800; font-size:clamp(18px,3.4vw,28px)}
+.logoimg{height:44px; width:auto; display:block; filter: drop-shadow(0 0 10px rgba(255,43,209,.35))}
+.title{font-weight:800; font-size:clamp(18px,3.4vw,26px)}
+
 .btn{
-  appearance:none; border:1px solid var(--stroke); background:rgba(255,255,255,.06); color:var(--text);
+  appearance:none; border:1px solid var(--stroke); background:rgba(255,255,255,.08); color:var(--text);
   padding:10px 14px; border-radius:14px; cursor:pointer; font-weight:700; transition:transform .08s ease, box-shadow .12s ease
 }
 .btn:active{transform:scale(.98)}
@@ -42,54 +58,61 @@ header{display:flex; align-items:center; justify-content:space-between; gap:10px
 .progress{height:8px; background:rgba(255,255,255,.08); border:1px solid var(--stroke); border-radius:999px; overflow:hidden}
 .progress>i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .35s ease}
 
-.stage{display:grid; grid-template-columns:1fr; gap:12px; padding:12px 14px 16px}
+.stage{display:grid; grid-template-columns:1fr; gap:12px; padding:10px 14px 14px}
 .question{font-size:clamp(18px,3vw,22px); margin:2px 2px 4px}
 
 .grid{
-  display:grid; gap:16px;
+  display:grid; gap:14px;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   justify-items:center;
 }
 .card{
   display:flex; flex-direction:column; align-items:center;
-  border:1px solid var(--stroke); background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-  border-radius:20px; width:min(100%, 340px); padding:10px 10px 12px;
-  box-shadow:0 6px 20px rgba(0,0,0,.25);
+  border:1px solid var(--stroke); background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  border-radius:18px; width:100%; max-width:360px; padding:8px 10px 12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
 }
+/* iPhone-safe, actually clickable */
 .card>button{
-  all:unset; cursor:pointer; width:100%; display:flex; flex-direction:column; align-items:center;
+  appearance:none; border:0; background:transparent;
+  width:100%; display:flex; flex-direction:column; align-items:center;
+  cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  -webkit-user-select:none; user-select:none; min-height:44px;
 }
 .card>button:focus-visible{outline:3px solid #ffffff88; outline-offset:4px; border-radius:14px}
+
+/* PIC tiles — 200×200 exactly */
 .imgbox{
-  width:250px; height:250px; margin:8px auto 6px; border-radius:16px;
+  width:200px; height:200px; margin:8px auto 6px; border-radius:16px;
   display:grid; place-items:center;
   background:
     radial-gradient(600px 200px at 50% 0%, rgba(255,255,255,.12), rgba(255,255,255,.02)),
     linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
 }
-.emoji{font-size:112px; line-height:1}
+.emoji{font-size:92px; line-height:1}
 .label{padding:10px 6px 4px; font-weight:800; text-align:center; color:var(--muted)}
 
 .controls{display:flex; gap:10px; justify-content:space-between; align-items:center; padding:0 2px 10px}
-.results{display:none; padding:12px 14px 16px}
+
+.results{display:none; padding:10px 14px 14px}
 .results.show{display:block}
 .results-grid{
-  display:grid; gap:16px;
+  display:grid; gap:14px;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   justify-items:center;
 }
+
 footer{padding:10px 14px 14px; display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:14px}
 .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; border:1px solid var(--stroke); border-bottom-width:2px; padding:.1em .5em; border-radius:6px; background:rgba(255,255,255,.05)}
+
 @media (max-width:560px){
-  header{padding:12px}
-  .logoimg{height:42px}
   .grid,.results-grid{grid-template-columns:1fr}
-  .card{width:100%; max-width:380px}
+  .card{max-width:420px}
 }
 </style>
 </head>
 <body>
-<main class="app glass" id="app">
+<main class="app" id="app">
   <header>
     <div class="brand">
       <img class="logoimg" src="./logo_shensawi_neon.png" alt="شنسوي — by Fahad" onerror="this.style.display='none'"/>
@@ -200,7 +223,7 @@ function render(){
   q.options.forEach(opt=>{
     const card=document.createElement('div'); card.className='card';
     const btn=document.createElement('button'); btn.type='button'; btn.setAttribute('aria-label', opt.label);
-    btn.addEventListener('click', ()=>select(opt));
+    btn.addEventListener('click', ()=>select(opt), {passive:true});
 
     const img=document.createElement('div'); img.className='imgbox';
     img.innerHTML=`<span class="emoji">${opt.emoji||'⭐'}</span>`;
@@ -315,7 +338,11 @@ stageEl.addEventListener('click',e=>{
   if(next!==null) el.textContent=next;
 });
 
-function escapeHTML(s){return (s||'').replace(/[&<>\"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+function escapeHTML(s){
+  return (s||'').replace(/[&<>\"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"
+  }[m]));
+}
 
 document.addEventListener('DOMContentLoaded',render);
 </script>
