@@ -1,348 +1,435 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>شنسوي الويكند؟</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@700&family=Cairo:wght@400;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>شنسوي الويكند؟ — مُرشِّح الأنشطة</title>
   <style>
     :root{
-      /* modern purple/indigo system */
-      --grad-1: linear-gradient(135deg,#ff6bd6 0%,#a06bff 45%,#4f46e5 100%);
-      --bg-1: #0b0a13;
-      --bg-2: #14122a;
-      --card: rgba(255,255,255,.06);
-      --card-strong: rgba(255,255,255,.10);
-      --text: #ffffff;
-      --muted: #cfc7ff;
-      --shadow: 0 20px 60px rgba(79,70,229,.35);
-      --radius: 18px;
+      --bg1:#0f1022;--bg2:#132b38;--glass:rgba(255,255,255,.08);--stroke:rgba(255,255,255,.16);
+      --text:#ffffff;--muted:#cfd8dc;--accent:#7cf3e0;--accent2:#b388ff;
     }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin:0;
-      background:
-        radial-gradient(1200px 600px at 20% -10%, #211c4a 0%, transparent 55%),
-        radial-gradient(900px 600px at 120% 10%, #2a0f2d 0%, transparent 50%),
-        var(--bg-1);
-      color:var(--text);
-      font-family: "Cairo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      display:flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 20px;
+      margin:0; color:var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Kufi Arabic", "Noto Sans", Arial, sans-serif;
+      background: radial-gradient(1200px 1200px at 10% -10%, #1e1b4b 0%, transparent 60%),
+                  radial-gradient(900px 900px at 110% 10%, #0ea5e9 0%, transparent 50%),
+                  linear-gradient(160deg,var(--bg1),var(--bg2));
+      display:flex; align-items:center; justify-content:center; padding:24px;
     }
-
-    .wrap{ width: min(960px, 100%); }
-
-    /* header */
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 16px;
-      margin-bottom: 18px;
+    .app{width:min(1100px,100%);}
+    .glass{
+      background:var(--glass); border:1px solid var(--stroke); backdrop-filter: blur(14px);
+      box-shadow:0 10px 40px rgba(0,0,0,.35); border-radius:24px; overflow:hidden;
     }
+    header{display:flex; align-items:center; justify-content:space-between; padding:16px 20px;}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:42px;height:42px;border-radius:12px; background:conic-gradient(from 210deg, var(--accent2), var(--accent), #60a5fa, var(--accent2));
+      display:grid; place-items:center; font-weight:800; letter-spacing:.5px; color:#0b1020}
+    .title{font-weight:800; font-size:clamp(18px,3vw,28px)}
 
-    .brand{
-      display:flex; align-items:center; gap:14px;
-    }
+    .hero{padding:8px 20px 18px 20px;}
+    .progress{height:8px; background:rgba(255,255,255,.08); border:1px solid var(--stroke); border-radius:999px; overflow:hidden;}
+    .progress > i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .35s ease}
 
-    .logo{ width: 210px; height:auto; display:block; filter: drop-shadow(0 8px 24px rgba(155,92,255,.35)); }
+    .stage{display:grid; grid-template-columns: 1fr; gap:16px; padding:18px 20px 24px 20px}
+    .question{font-size:clamp(18px,3vw,22px); color:var(--text); margin:4px 2px 6px 2px}
+    .grid{display:grid; gap:14px; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));}
 
-    /* title */
-    h1{
-      font-family: "Reem Kufi", system-ui;
-      font-size: clamp(28px, 4.2vw, 46px);
-      margin: 8px 0 4px;
-      line-height: 1.1;
-      letter-spacing: .2px;
-      text-shadow: 0 2px 0 rgba(0,0,0,.25);
-    }
+    .card{position:relative; border:1px solid var(--stroke); background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border-radius:20px; overflow:hidden; cursor:pointer; transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease}
+    .card:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.28); box-shadow:0 8px 24px rgba(0,0,0,.35)}
+    .imgbox{aspect-ratio:1/1; display:grid; place-items:center; background:radial-gradient(600px 200px at 50% 0%, rgba(255,255,255,.12), rgba(255,255,255,.02)),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));}
+    .imgbox svg{width:62%; height:62%; opacity:.9}
+    .label{padding:12px 14px; font-weight:700; text-align:center; color:var(--muted)}
+    .muted{color:var(--muted)}
 
-    /* progress */
-    .progress{
-      height: 8px;
-      background: var(--card);
-      border-radius: 999px;
-      overflow:hidden;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
-      margin: 10px 0 22px;
-    }
-    .progress > i{
-      display:block; height:100%; width:0%;
-      background: var(--grad-1);
-      box-shadow: var(--shadow);
-      transition: width .35s ease;
-    }
+    .controls{display:flex; gap:10px; justify-content:space-between; align-items:center; padding:0 2px}
+    .btn{appearance:none; border:1px solid var(--stroke); background:rgba(255,255,255,.06); color:var(--text);
+      padding:10px 14px; border-radius:14px; cursor:pointer; font-weight:700; transition:filter .12s ease, transform .08s ease}
+    .btn:active{transform:scale(.98)}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0b1020; border-color:transparent}
 
-    /* cards */
-    .card{
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: var(--radius);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
+    .results{display:none; padding:22px 20px 26px}
+    .results.show{display:block}
+    .results-grid{display:grid; gap:14px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));}
+    .results .card{margin:0}
 
-    .question{ font-size: clamp(18px, 2.8vw, 24px); margin: 6px 4px 14px; font-weight:700; }
+    footer{padding:14px 20px 20px; display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:14px}
+    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; border:1px solid var(--stroke); border-bottom-width:2px;
+      padding:.1em .5em; border-radius:6px; background:rgba(255,255,255,.05)}
 
-    .options{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 12px;
-    }
-
-    .opt{
-      border: 1px solid rgba(255,255,255,.14);
-      background: var(--card-strong);
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform .08s ease, background .2s ease, border-color .2s ease;
-      text-align:center;
-      user-select:none;
-    }
-    .opt:active{ transform: scale(.98); }
-    .opt:hover{ border-color: rgba(255,255,255,.30); }
-
-    /* result */
-    .result{ display:none; }
-    .result .title{
-      font-size: clamp(22px, 3.2vw, 28px);
-      font-weight: 800;
-      margin: 8px 0 12px;
-    }
-    .result .box{
-      background: var(--card-strong);
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 14px;
-      padding: 18px;
-      font-size: 22px;
-      font-weight: 800;
-      text-align:center;
-    }
-    .result small{ color: var(--muted); display:block; margin-top: 6px; }
-
-    /* actions */
-    .actions{
-      display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:18px;
-    }
-    .btn{
-      border:none; cursor:pointer; font-size:16px; font-weight:800;
-      padding:12px 16px; border-radius:14px; min-width:160px;
-    }
-    .btn-primary{ background: var(--grad-1); color:#fff; box-shadow: var(--shadow); }
-    .btn-ghost{ background: transparent; color:#fff; border:1px solid rgba(255,255,255,.25); }
-
-    /* utility */
-    .hide{ display:none !important; }
-
-    @media (min-width:768px){
-      .options{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    @media (max-width:560px){
+      .grid{grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));}
+      .results-grid{grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));}
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <main class="app glass" id="app">
     <header>
       <div class="brand">
-        <!-- NEW LOGO -->
-        <svg viewBox="0 0 420 160" class="logo" aria-label="شنسوي؟ by FAHAD">
-          <defs>
-            <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%"  stop-color="#ff77c8"/>
-              <stop offset="55%" stop-color="#9b5cff"/>
-              <stop offset="100%" stop-color="#4f46e5"/>
-            </linearGradient>
-            <filter id="softGlow">
-              <feGaussianBlur stdDeviation="6" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <!-- rounded square frame -->
-          <rect x="8" y="8" rx="32" ry="32" width="144" height="144"
-                fill="none" stroke="url(#g)" stroke-width="16" filter="url(#softGlow)"/>
-          <!-- Arabic title -->
-          <text x="80" y="90" text-anchor="middle"
-                font-family="'Reem Kufi', system-ui" font-size="56"
-                fill="url(#g)">شنسوي؟</text>
-          <!-- by FAHAD (handwritten) -->
-          <text x="165" y="130"
-                font-family="'Caveat', cursive" font-size="52"
-                fill="url(#g)" style="letter-spacing:1px">by FAHAD</text>
-        </svg>
+        <div class="logo" aria-hidden="true">WK</div>
+        <div class="title" id="appTitle">شنسوي الويكند؟</div>
       </div>
+      <button class="btn" id="resetBtn" title="إعادة البداية">↺ إعادة</button>
     </header>
 
-    <h1>شنسوي الويكند؟</h1>
+    <div class="hero">
+      <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+    </div>
 
-    <!-- progress -->
-    <div class="progress" aria-hidden="true"><i id="progBar"></i></div>
+    <section class="stage" id="stage" aria-live="polite"></section>
 
-    <!-- QUIZ CARD -->
-    <section id="quizCard" class="card">
-      <div id="qText" class="question">خلّنا نعرف مزاجك اليوم 👇</div>
-      <div id="options" class="options"></div>
-    </section>
+    <section class="results" id="results"></section>
 
-    <!-- RESULT CARD -->
-    <section id="resultCard" class="card result">
-      <div class="title">اقتراحنا لكم 👇</div>
-      <div class="box" id="finalTitle">—</div>
-      <small id="similarText" class="hide">خيارات مشابهة: <span id="similarList"></span></small>
-
-      <div class="actions">
-        <button class="btn btn-primary" id="restartBtn">نعيد من أول؟</button>
-        <button class="btn btn-ghost" id="swapBtn">بدّل الاختيار</button>
-      </div>
-    </section>
-  </div>
+    <footer>
+      <span class="muted">فلتر أنشطة — صور النتائج عناصر نائبة مؤقتًا.</span>
+      <span class="muted">Tip: اضغط <span class="kbd">E</span> لتبديل التحرير السريع للنصوص.</span>
+    </footer>
+  </main>
 
   <script>
-    // ===== DATA (tags used internally only — never shown) =====
-    const QUESTIONS = [
+  // ===============================
+  // DATA (with activities catalog)
+  // ===============================
+  const DATA = {
+    meta: {
+      title: "شنسوي الويكند؟",
+      rtl: true
+    },
+
+    // Q0: Group -> Kids / Adults / Mixed
+    // ثم الطاقة -> المكان -> المدة
+    questions: [
       {
-        text: "تحبها داخل ولا برا؟",
+        id: "q0_group",
+        text: "منو المجموعة؟",
         options: [
-          { label: "Outdoor", tags: ["outdoor"] },
-          { label: "Indoor", tags: ["indoor"] },
-          { label: "ما يفرق", tags: ["flex"] }
+          { id: "kids",   label: "أطفال",           image: "placeholder:calm", next: "q1_energy" },
+          { id: "adults", label: "بالغين",          image: "placeholder:bold", next: "q1_energy" },
+          { id: "mixed",  label: "عائلة/مختلط",     image: "placeholder:classic", next: "q1_energy" }
         ]
       },
       {
-        text: "مزاجك لحالك أو جماعة؟",
+        id: "q1_energy",
+        text: "المود شنو تبيه؟",
         options: [
-          { label: "جماعة", tags: ["group"] },
-          { label: "لحالي", tags: ["solo"] },
-          { label: "قريبين فقط", tags: ["few"] }
+          { id: "chill",    label: "هادي ومريح",  image: "placeholder:soft", next: "q2_place" },
+          { id: "creative", label: "إبداعي/صنع شي", image: "placeholder:minimal", next: "q2_place" },
+          { id: "active",   label: "حركي وممتع",  image: "placeholder:fun", next: "q2_place" }
         ]
       },
       {
-        text: "الجهد؟",
+        id: "q2_place",
+        text: "وين تفضل؟",
         options: [
-          { label: "خفيف", tags: ["light"] },
-          { label: "متوسط", tags: ["medium"] },
-          { label: "ثقيل", tags: ["intense"] }
+          { id: "indoor", label: "داخل",       image: "placeholder:indoor", next: "q3_time" },
+          { id: "outdoor", label: "خارج",      image: "placeholder:outdoor", next: "q3_time" },
+          { id: "water",  label: "قريب من البحر", image: "placeholder:sea", next: "q3_time" },
+          { id: "city",   label: "أماكن المدينة", image: "placeholder:city", next: "q3_time" }
+        ]
+      },
+      {
+        id: "q3_time",
+        text: "المدّة؟",
+        options: [
+          { id: "quick",  label: "طلعة سريعة",   image: "placeholder:short", next: "result:auto" },
+          { id: "twoh",   label: "حوالي ساعتين", image: "placeholder:mid",   next: "result:auto" },
+          { id: "evening",label: "سهرة كاملة",   image: "placeholder:long",  next: "result:auto" }
         ]
       }
-    ];
+    ],
 
-    const ACTIVITIES = [
-      { title: "رحلة دراجات", tags: ["outdoor","group","medium"] },
-      { title: "حفلة شواء على البحر", tags: ["outdoor","group","light"] },
-      { title: "كوفي وボード جيمز", tags: ["indoor","group","light"] },
-      { title: "سينما + عشاء", tags: ["indoor","few","light"] },
-      { title: "تريك خفيف في الصباحية", tags: ["outdoor","few","medium"] },
-      { title: "سبا و مساج", tags: ["indoor","solo","light"] },
-      { title: "تنس/بادل", tags: ["outdoor","few","intense"] },
-      { title: "متحف + كافيه", tags: ["indoor","few","light"] },
-      { title: "تمشى في الشاطئ", tags: ["outdoor","solo","light"] },
-      { title: "تخييم قريب", tags: ["outdoor","group","medium"] }
-    ];
+    // Catalog of activities (images are placeholders/optional)
+    activities: [
+      // ==== Active =====
+      { id:"bowling", title:"بولينغ ممتع", groups:["adults","mixed","kids"], energy:"active", place:"indoor", duration:["twoh"], image:"", desc:"مسابقة سريعة بالكور والسترايك." },
+      { id:"trampoline", title:"ترامبولين بارك", groups:["kids","mixed"], energy:"active", place:"indoor", duration:["twoh"], image:"", desc:"قفز وحرق طاقة آمنة وممتعة." },
+      { id:"escape", title:"غرفة هروب", groups:["adults","mixed"], energy:"active", place:"indoor", duration:["twoh"], image:"", desc:"ألغاز جماعية وسباق مع الوقت." },
+      { id:"laser", title:"لايزر تاج", groups:["mixed","adults","kids"], energy:"active", place:"indoor", duration:["twoh","quick"], image:"", desc:"قتال ليزري آمن، فرق وتحديات." },
+      { id:"arcade", title:"ألعاب آركيد وVR", groups:["mixed","adults","kids"], energy:"active", place:"indoor", duration:["quick","twoh"], image:"", desc:"سباقات ومحاكيات وتجارب VR." },
+      { id:"bikes", title:"دراجات/سكوترات في الممشى", groups:["mixed","adults","kids"], energy:"active", place:"outdoor", duration:["twoh","quick"], image:"", desc:"لفة هواء عليل ونشاط خفيف." },
+      { id:"kayak", title:"كاياك/قوارب", groups:["mixed","adults"], energy:"active", place:"water", duration:["twoh"], image:"", desc:"تجربة بحرية سهلة ومنعشة." },
+      { id:"minigolf", title:"ميني غولف", groups:["mixed","adults","kids"], energy:"active", place:"outdoor", duration:["twoh","quick"], image:"", desc:"ثقوب مرحة ومنافسات بسيطة." },
+      { id:"climb", title:"تسلق جدار داخلي", groups:["mixed","adults"], energy:"active", place:"indoor", duration:["twoh"], image:"", desc:"تحدي عضلي آمن مع أحزمة." },
+      { id:"iceskate", title:"تزلج على الجليد", groups:["mixed","adults","kids"], energy:"active", place:"indoor", duration:["twoh","quick"], image:"", desc:"لفّات جليدية ممتعة." },
 
-    // ===== STATE =====
-    let step = 0;
-    let chosenTags = new Set();
+      // ==== Chill =====
+      { id:"cinema", title:"سينما", groups:["mixed","adults"], energy:"chill", place:"indoor", duration:["twoh","evening"], image:"", desc:"فيلم جديد وموفي نايت." },
+      { id:"corniche", title:"مشية على الكورنيش", groups:["mixed","adults","kids"], energy:"chill", place:"water", duration:["quick","twoh"], image:"", desc:"هواء بحر وجلسة مريحة." },
+      { id:"beachsunset", title:"شاطئ وقت الغروب", groups:["mixed","adults","kids"], energy:"chill", place:"water", duration:["evening"], image:"", desc:"ألوان الغروب وهدوء البحر." },
+      { id:"parkplay", title:"حديقة وملاعب", groups:["kids","mixed"], energy:"chill", place:"outdoor", duration:["twoh","quick"], image:"", desc:"ألعاب وركض خفيف." },
+      { id:"boardcafe", title:"جلسة ألعاب لوحية", groups:["mixed","adults","kids"], energy:"chill", place:"indoor", duration:["twoh"], image:"", desc:"كاتان/أونو/مونوبولي بلا ملل." },
+      { id:"library", title:"مكتبة/قراءة", groups:["adults","mixed"], energy:"chill", place:"indoor", duration:["quick","twoh"], image:"", desc:"قهوة وكتاب وجو هادئ." },
+      { id:"stargaze", title:"تأمل نجوم", groups:["mixed","adults","kids"], energy:"chill", place:"outdoor", duration:["evening"], image:"", desc:"سجادة وسماء صافية وتطبيق فلك." },
+      { id:"desertcoffee", title:"قعدة صحراوية خفيفة", groups:["mixed","adults"], energy:"chill", place:"outdoor", duration:["evening"], image:"", desc:"جلسة ونار وقهوة." },
+      { id:"yoga", title:"يوغا/استرخاء جماعي", groups:["adults","mixed"], energy:"chill", place:"indoor", duration:["quick","twoh"], image:"", desc:"تنفّس وتمارين مرونة." },
 
-    const qText = document.getElementById('qText');
-    const optionsBox = document.getElementById('options');
-    const quizCard = document.getElementById('quizCard');
-    const resultCard = document.getElementById('resultCard');
-    const finalTitle = document.getElementById('finalTitle');
-    const similarText = document.getElementById('similarText');
-    const similarList = document.getElementById('similarList');
-    const progBar = document.getElementById('progBar');
+      // ==== Creative =====
+      { id:"paint", title:"ورشة رسم/تلوين", groups:["mixed","adults","kids"], energy:"creative", place:"indoor", duration:["twoh","quick"], image:"", desc:"لوحات وألوان وإطارات." },
+      { id:"pottery", title:"خزف وصناعة فخار", groups:["adults","mixed"], energy:"creative", place:"indoor", duration:["twoh"], image:"", desc:"عجلة خزف وتلوين القطع." },
+      { id:"science", title:"مركز علوم/تجارب", groups:["kids","mixed"], energy:"creative", place:"indoor", duration:["twoh"], image:"", desc:"تعليم ممتع وتجارب بسيطة." },
+      { id:"cityphoto", title:"جولة تصوير في المدينة", groups:["adults","mixed"], energy:"creative", place:"city", duration:["twoh"], image:"", desc:"لقطات جمالية وستريت فوتو." },
+      { id:"sandart", title:"لوحات رمل/أعمال يدوية", groups:["kids"], energy:"creative", place:"indoor", duration:["twoh","quick"], image:"", desc:"إبداعات آمنة للصغار." },
+      { id:"mirrors", title:"متاهة مرايا/بيت رعب", groups:["mixed","adults","kids"], energy:"creative", place:"indoor", duration:["quick"], image:"", desc:"تجربة حسّية مسلية." },
+      { id:"cook", title:"ورشة طبخ عائلية", groups:["mixed"], energy:"creative", place:"indoor", duration:["twoh"], image:"", desc:"وصفة سهلة وفون مع العائلة." },
+      { id:"craftmarket", title:"سوق حرفي محلي", groups:["adults","mixed"], energy:"creative", place:"city", duration:["twoh","quick"], image:"", desc:"أعمال يدوية ومنتجات فنية." }
+    ]
+  };
 
-    function updateProgress(){
-      const pct = (step / QUESTIONS.length) * 100;
-      progBar.style.width = Math.max(4, pct) + '%';
+  // ============= RENDER/STATE =============
+  const stageEl = document.getElementById('stage');
+  const resultsEl = document.getElementById('results');
+  const barEl = document.getElementById('bar');
+  const resetBtn = document.getElementById('resetBtn');
+  const titleEl = document.getElementById('appTitle');
+
+  let answers = []; // [{q, o}]
+  let currentQ = DATA.questions[0]?.id || null;
+  const qIndexById = Object.fromEntries(DATA.questions.map((q,i)=>[q.id,i]));
+
+  // apply meta
+  document.documentElement.dir = DATA.meta?.rtl === false ? 'ltr' : 'rtl';
+  titleEl.textContent = DATA.meta?.title || titleEl.textContent;
+
+  function render(){
+    resultsEl.classList.remove('show');
+    stageEl.innerHTML = '';
+
+    const q = DATA.questions[qIndexById[currentQ]];
+    if(!q){ return showAutoResults(); }
+
+    // progress
+    const step = qIndexById[currentQ] + 1;
+    const total = DATA.questions.length;
+    barEl.style.width = Math.round((step-1)/total*100) + '%';
+
+    const qEl = document.createElement('div');
+    qEl.className = 'question';
+    qEl.textContent = q.text;
+    stageEl.appendChild(qEl);
+
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+
+    q.options.forEach(opt=>{
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.setAttribute('role','button');
+      card.setAttribute('tabindex','0');
+      card.addEventListener('click', ()=>select(opt));
+      card.addEventListener('keyup', (e)=>{ if(e.key==='Enter' || e.key===' '){ select(opt); }});
+
+      const img = document.createElement('div');
+      img.className = 'imgbox';
+      img.innerHTML = renderPlaceholder(opt.image);
+
+      const lab = document.createElement('div');
+      lab.className = 'label';
+      lab.textContent = opt.label;
+
+      card.appendChild(img); card.appendChild(lab);
+      grid.appendChild(card);
+    });
+
+    stageEl.appendChild(grid);
+
+    // controls
+    const controls = document.createElement('div');
+    controls.className = 'controls';
+    const back = document.createElement('button'); back.className = 'btn'; back.textContent = 'رجوع';
+    back.disabled = answers.length===0;
+    back.addEventListener('click', goBack);
+
+    const skip = document.createElement('button'); skip.className = 'btn'; skip.textContent = 'تخطي';
+    skip.addEventListener('click', ()=>{
+      answers.push({ q: q.id, o: null });
+      advance(q, { next: q.options[0]?.next || null }, true);
+    });
+
+    controls.appendChild(back); controls.appendChild(skip);
+    stageEl.appendChild(controls);
+  }
+
+  function select(opt){
+    const q = DATA.questions[qIndexById[currentQ]];
+    answers.push({ q: q.id, o: opt.id });
+    advance(q, opt, false);
+  }
+
+  function advance(q, opt){
+    const nxt = opt.next || null;
+    if(nxt && nxt.startsWith('result:auto')){
+      showAutoResults();
+    }else if(nxt){
+      currentQ = nxt;
+      render();
+    }else{
+      showAutoResults();
     }
+  }
 
-    function renderQuestion(){
-      const q = QUESTIONS[step];
-      qText.textContent = q.text;
-      optionsBox.innerHTML = '';
-      q.options.forEach(opt => {
-        const b = document.createElement('button');
-        b.className = 'opt';
-        b.type = 'button';
-        b.textContent = opt.label;
-        b.onclick = () => choose(opt.tags);
-        optionsBox.appendChild(b);
-      });
-      updateProgress();
-    }
+  function goBack(){
+    if(answers.length===0){return}
+    answers.pop();
+    const prevQ = answers.length ? answers[answers.length-1].q : DATA.questions[0].id;
+    currentQ = prevQ;
+    render();
+  }
 
-    function choose(tags){
-      tags.forEach(t => chosenTags.add(t));
-      step++;
-      if(step >= QUESTIONS.length){
-        showResult();
-      } else {
-        renderQuestion();
+  // ======= RESULT SELECTION (scored filter) =======
+  function showAutoResults(){
+    stageEl.innerHTML = '';
+    barEl.style.width = '100%';
+
+    const prefs = {
+      group: getAnswer("q0_group"),
+      energy: getAnswer("q1_energy"),
+      place: getAnswer("q2_place"),
+      time: getAnswer("q3_time")
+    };
+
+    // score each activity
+    const scored = DATA.activities.map(a=>{
+      let okGroup = !prefs.group || a.groups.includes(prefs.group);
+      if(!okGroup) return null;
+
+      let score = 0;
+      if(prefs.energy && a.energy === prefs.energy) score += 3;
+      if(prefs.place){
+        if(a.place === prefs.place) score += 3;
+        else if(prefs.place==="water" && a.place==="outdoor") score += 1; // near-match
+        else if(prefs.place==="outdoor" && a.place==="water") score += 1;
+        else if(prefs.place==="city" && (a.place==="indoor"||a.place==="outdoor")) score += 1;
       }
+      if(prefs.time && (a.duration?.includes(prefs.time))) score += 2;
+
+      // light boost if activity is family-friendly when group mixed
+      if(prefs.group==="mixed" && a.groups.includes("kids")) score += 1;
+
+      return { a, score };
+    }).filter(Boolean).sort((x,y)=>y.score-x.score);
+
+    const top = scored.slice(0, Math.max(3, Math.min(5, scored.length))).map(s=>s.a);
+
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `<div class="question">اقتراحات تناسب اختياراتك</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'results-grid';
+
+    (top.length? top : fallbackList()).forEach(item=>{
+      const card = document.createElement('article'); card.className='card';
+      const img = document.createElement('div'); img.className='imgbox';
+      img.innerHTML = item.image ? `<img alt="" src="${item.image}" style="width:100%;height:100%;object-fit:cover;"/>` : svgStar(item.title);
+      const lab = document.createElement('div'); lab.className='label';
+      lab.innerHTML = `<div>${escapeHTML(item.title)}</div><div class="muted" style="font-weight:500">${escapeHTML(item.desc||"")}</div>`;
+      card.appendChild(img); card.appendChild(lab);
+      grid.appendChild(card);
+    });
+
+    resultsEl.innerHTML = '';
+    wrap.appendChild(grid);
+    resultsEl.appendChild(wrap);
+    resultsEl.classList.add('show');
+
+    // controls under result
+    const ctr = document.createElement('div');
+    ctr.className = 'controls';
+    const again = document.createElement('button'); again.className = 'btn primary'; again.textContent = 'ابدأ من جديد';
+    again.addEventListener('click', reset);
+    const tweak = document.createElement('button'); tweak.className = 'btn'; tweak.textContent = 'تعديل الاختيارات';
+    tweak.addEventListener('click', ()=>{ goBack(); });
+    ctr.appendChild(again); ctr.appendChild(tweak);
+    resultsEl.appendChild(ctr);
+  }
+
+  function getAnswer(qid){
+    const found = [...answers].reverse().find(x=>x.q===qid && x.o!==null);
+    return found ? found.o : null;
+  }
+
+  function fallbackList(){
+    // في حال ما طلع شي (نادرًا)
+    return DATA.activities.slice(0,3);
+  }
+
+  function reset(){ answers = []; currentQ = DATA.questions[0]?.id || null; render(); }
+  resetBtn.addEventListener('click', reset);
+
+  function escapeHTML(s){return (s||'').replace(/[&<>\"']/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+
+  // ====== Placeholder renderers (inline SVG icons) ======
+  const ICONS = {
+    calm: svgCircle(""),
+    fun: svgBurst(""),
+    adventure: svgPath(""),
+    chill: svgWave(""),
+    indoor: svgHouse(""),
+    outdoor: svgSun(""),
+    sea: svgSea(""),
+    city: svgCity(""),
+    short: svgClock(""),
+    mid: svgClock(""),
+    long: svgClock(""),
+    soft: svgBlend(""),
+    bold: svgBolt(""),
+    minimal: svgGrid(""),
+    classic: svgStar("")
+  };
+  function renderPlaceholder(code){
+    if(!code || !code.startsWith('placeholder:')) return `<div></div>`;
+    const key = code.split(':')[1];
+    if(ICONS[key]) return ICONS[key];
+    return svgStar('');
+  }
+  function svgWrap(inner, label){
+    return `<svg viewBox="0 0 100 100" role="img" aria-label="${label||''}" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7cf3e0"/>
+          <stop offset="100%" stop-color="#b388ff"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="100" height="100" rx="18" fill="url(#g1)" opacity=".25"/>
+      ${inner}
+    </svg>`;
+  }
+  function svgCircle(t){return svgWrap(`<circle cx="50" cy="50" r="26" fill="none" stroke="#7cf3e0" stroke-width="6"/><text x="50" y="56" text-anchor="middle" font-size="12" fill="#e0f2f1">${t||''}</text>`, t)}
+  function svgBurst(t){return svgWrap(`<g stroke="#b388ff" stroke-width="6" fill="none"><path d="M50 12 L58 34 L82 34 L62 48 L70 70 L50 56 L30 70 L38 48 L18 34 L42 34 Z"/></g><text x="50" y="90" text-anchor="middle" font-size="12" fill="#f3e8ff">${t||''}</text>`, t)}
+  function svgPath(t){return svgWrap(`<path d="M18,80 C30,30 70,70 82,20" stroke="#7cf3e0" stroke-width="6" fill="none"/><text x="50" y="90" text-anchor="middle" font-size="12" fill="#c8fff4">${t||''}</text>`, t)}
+  function svgWave(t){return svgWrap(`<path d="M0,60 Q25,40 50,60 T100,60" stroke="#7cf3e0" stroke-width="6" fill="none"/><text x="50" y="90" text-anchor="middle" font-size="12" fill="#c8fff4">${t||''}</text>`, t)}
+  function svgHouse(t){return svgWrap(`<path d="M20 60 L50 30 L80 60 V80 H20 Z" fill="none" stroke="#7cf3e0" stroke-width="6"/><text x="50" y="90" text-anchor="middle" font-size="12" fill="#c8fff4">${t||''}</text>`, t)}
+  function svgSun(t){return svgWrap(`<circle cx="50" cy="50" r="18" fill="none" stroke="#b388ff" stroke-width="6"/><g stroke="#b388ff" stroke-width="4">${Array.from({length:12}).map((_,i)=>{const a=i*30*Math.PI/180; const x1=50+Math.cos(a)*26; const y1=50+Math.sin(a)*26; const x2=50+Math.cos(a)*38; const y2=50+Math.sin(a)*38; return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`}).join('')}</g><text x="50" y="90" text-anchor="middle" font-size="12" fill="#f3e8ff">${t||''}</text>`, t)}
+  function svgSea(t){return svgWrap(`<path d="M10,70 Q25,62 40,70 T70,70 T100,70" stroke="#7cf3e0" stroke-width="6" fill="none"/><text x="50" y="90" text-anchor="middle" font-size="12" fill="#c8fff4">${t||''}</text>`, t)}
+  function svgCity(t){return svgWrap(`<g stroke="#7cf3e0" stroke-width="6" fill="none"><rect x="18" y="50" width="18" height="30"/><rect x="42" y="40" width="16" height="40"/><rect x="64" y="58" width="18" height="22"/></g><text x="50" y="90" text-anchor="middle" font-size="12" fill="#c8fff4">${t||''}</text>`, t)}
+  function svgClock(t){return svgWrap(`<circle cx="50" cy="50" r="26" fill="none" stroke="#b388ff" stroke-width="6"/><line x1="50" y1="50" x2="50" y2="34" stroke="#b388ff" stroke-width="6"/><line x1="50" y1="50" x2="64" y2="50" stroke="#b388ff" stroke-width="6"/><text x="50" y="90" text-anchor="middle" font-size="12" fill="#f3e8ff">${t||''}</text>`, t)}
+  function svgBlend(t){return svgWrap(`<defs><linearGradient id="g2" x1="0" y="0" x2="1" y="1"><stop offset="0%" stop-color="#e0f7fa"/><stop offset="100%" stop-color="#ede7f6"/></linearGradient></defs><circle cx="50" cy="50" r="26" fill="url(#g2)" opacity=".7"/><text x="50" y="90" text-anchor="middle" font-size="12" fill="#e0f2f1">${t||''}</text>`, t)}
+  function svgBolt(t){return svgWrap(`<path d="M44 18 L28 56 H48 L40 82 L72 46 H52 L60 18 Z" fill="none" stroke="#ffd76a" stroke-width="6"/><text x="50" y="90" text-anchor="middle" font-size="12" fill="#fff3c0">${t||''}</text>`, t)}
+  function svgGrid(t){return svgWrap(`<g stroke="#7cf3e0" stroke-width="6" opacity=".9"><line x1="20" y1="40" x2="80" y2="40"/><line x1="20" y1="60" x2="80" y2="60"/><line x1="40" y1="20" x2="40" y2="80"/><line x1="60" y1="20" x2="60" y2="80"/></g><text x="50" y="90" text-anchor="middle" font-size="12" fill="#c8fff4">${t||''}</text>`, t)}
+  function svgStar(t){return svgWrap(`<path d="M50 16 L58 38 L82 38 L62 52 L70 74 L50 60 L30 74 L38 52 L18 38 L42 38 Z" fill="none" stroke="#7cf3e0" stroke-width="6"/><text x="50" y="90" text-anchor="middle" font-size="12" fill="#c8fff4">${t||''}</text>`, t)}
+
+  // ===== Quick Edit Mode (press E) =====
+  let edit = false;
+  window.addEventListener('keydown', (e)=>{
+    if(e.key.toLowerCase()==='e'){
+      edit = !edit; document.body.classList.toggle('edit', edit);
+      alert(edit ? 'وضع التحرير السريع: اضغط على النصوص لتعديلها (مؤقت داخل المتصفح).' : 'تم إيقاف وضع التحرير.');
     }
+  });
+  stageEl.addEventListener('click', (e)=>{
+    if(!edit) return;
+    const el = e.target.closest('.label');
+    if(!el) return;
+    const current = el.textContent.trim();
+    const next = prompt('حرّر النص:', current);
+    if(next!==null){ el.textContent = next; }
+  });
 
-    // scoring by tag overlap
-    function bestMatch(list, wantTags){
-      const scored = list.map(item => {
-        const score = item.tags.reduce((acc,t)=> acc + (wantTags.has(t)?1:0), 0);
-        return { item, score };
-      }).sort((a,b)=> b.score - a.score);
-      return scored;
-    }
-
-    function showResult(){
-      // compute
-      const ranked = bestMatch(ACTIVITIES, chosenTags);
-      const top = ranked[0]?.item || { title:"اِطلعوا تتمشون ✨" };
-      finalTitle.textContent = top.title;
-
-      // similar (2–3 more)
-      const alts = ranked.slice(1,4).map(r => r.item.title);
-      if(alts.length){
-        similarList.textContent = alts.join(" • ");
-        similarText.classList.remove('hide');
-      }else{
-        similarText.classList.add('hide');
-      }
-
-      // swap views (NO TAGS/KEYWORDS ARE SHOWN)
-      quizCard.classList.add('hide');
-      resultCard.style.display = 'block';
-      progBar.style.width = '100%';
-    }
-
-    function restart(){
-      step = 0;
-      chosenTags = new Set();
-      resultCard.style.display = 'none';
-      quizCard.classList.remove('hide');
-      renderQuestion();
-    }
-
-    // swap = just pick next best suggestion
-    function swap(){
-      // rotate ACTIVITIES order by moving first to end then recompute
-      ACTIVITIES.push(ACTIVITIES.shift());
-      showResult();
-    }
-
-    document.getElementById('restartBtn').onclick = restart;
-    document.getElementById('swapBtn').onclick = swap;
-
-    // init
-    renderQuestion();
+  // start
+  render();
   </script>
 </body>
 </html>
