@@ -3,442 +3,336 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>شنسوي الويكند؟ — مُرشِّح الأنشطة</title>
+<title>شنسوي الويكند؟</title>
+
+<!-- Luxury, modern fonts (Arabic + Latin) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@600;700&family=Changa:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
+/* ====== THEME ====== */
 :root{
-  --bg1:#350e63;            /* base background (kept) */
-  --panel:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.14);
-  --text:#fff; --muted:#cfd8dc;
-  --accent:#ff2bd1; --accent2:#7c3aed;
+  --bg1:#0c001c;    /* deep aubergine */
+  --bg2:#2a0a5e;    /* royal violet */
+  --bg3:#5b1ca1;    /* electric purple */
+  --glass:rgba(255,255,255,.08);
+  --stroke:rgba(255,255,255,.22);
+  --soft-stroke:rgba(255,255,255,.14);
+  --text:#ffffff;
+  --muted:#d7d7e0;
+  --accent:#ff2bd1;   /* neon pink */
+  --accent2:#7c3aed;  /* vivid purple */
+  --shadow: 0 10px 35px rgba(0,0,0,.35);
 }
+
+/* ====== RESET ====== */
 *{box-sizing:border-box}
 html,body{height:100%}
+html,body,div,span,applet,object,iframe,
+h1,h2,h3,h4,h5,h6,p,blockquote,pre,
+a,abbr,acronym,address,big,cite,code,
+del,dfn,em,img,ins,kbd,q,s,samp,
+small,strike,strong,sub,sup,tt,var,
+b,u,i,center,dl,dt,dd,ol,ul,li,
+fieldset,form,label,legend,
+table,caption,tbody,tfoot,thead,tr,th,td,
+article,aside,canvas,details,embed,
+figure,figcaption,footer,header,hgroup,
+menu,nav,output,ruby,section,summary,
+time,mark,audio,video{margin:0;padding:0;border:0;font:inherit;vertical-align:baseline}
+
 body{
-  margin:0; color:var(--text);
-  -webkit-text-size-adjust:100%;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Kufi Arabic", "Noto Sans", Arial, sans-serif;
-
-  /* Solid base color + animated stars layer (canvas sits behind the app) */
-  background:var(--bg1);
-
-  min-height:100vh;
-  min-height:100svh;
-  -webkit-overflow-scrolling:touch;
-  overflow-x:hidden;
-  padding:16px 12px;
-  padding-top:calc(16px + env(safe-area-inset-top));
-  padding-bottom:calc(16px + env(safe-area-inset-bottom));
-  position:relative;
-}
-
-/* Fullscreen background canvas (sparkles) */
-#bg-stars{
-  position:fixed;
-  inset:0;
-  z-index:-1;           /* behind everything */
-  display:block;
-}
-
-.app{
-  width:100%;
-  max-width:720px;
-  margin-inline:auto;
-  background:var(--panel);
-  border:1px solid var(--stroke);
-  border-radius:22px;
-  box-shadow:0 10px 32px rgba(0,0,0,.35);
-  overflow:hidden;
-  backdrop-filter:saturate(120%) blur(0px);
-}
-header{
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  padding:12px 14px;
-}
-.brand{display:flex; align-items:center; gap:10px}
-.logoimg{height:44px; width:auto; display:block; filter: drop-shadow(0 0 10px rgba(255,43,209,.35))}
-.title{font-weight:800; font-size:clamp(18px,3.4vw,26px)}
-
-.btn{
-  appearance:none; border:1px solid var(--stroke); background:rgba(255,255,255,.08); color:var(--text);
-  padding:10px 14px; border-radius:14px; cursor:pointer; font-weight:700; transition:transform .08s ease, box-shadow .12s ease
-}
-.btn:active{transform:scale(.98)}
-.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#0b1020; border-color:transparent}
-
-.hero{padding:6px 14px 12px}
-.progress{height:8px; background:rgba(255,255,255,.08); border:1px solid var(--stroke); border-radius:999px; overflow:hidden}
-.progress>i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .35s ease}
-
-.stage{display:grid; grid-template-columns:1fr; gap:12px; padding:10px 14px 14px}
-.question{font-size:clamp(18px,3vw,22px); margin:2px 2px 4px}
-
-.grid{
-  display:grid; gap:14px;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  justify-items:center;
-}
-.card{
-  display:flex; flex-direction:column; align-items:center;
-  border:1px solid var(--stroke); background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-  border-radius:18px; width:100%; max-width:340px; padding:8px 10px 12px;
-  box-shadow:0 6px 18px rgba(0,0,0,.25);
-}
-.card>button{
-  appearance:none; border:0; background:transparent;
-  width:100%; display:flex; flex-direction:column; align-items:center;
-  cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
-  -webkit-user-select:none; user-select:none; min-height:44px;
-}
-.card>button:focus-visible{outline:3px solid #ffffff88; outline-offset:4px; border-radius:14px}
-
-/* === Smaller images (esp. on phones) === */
-.imgbox{
-  width:160px; height:160px;               /* smaller default */
-  margin:8px auto 6px; border-radius:16px;
-  display:grid; place-items:center;
+  color:var(--text);
+  font-family: "Changa", "Cairo Play", "Poppins", ui-sans-serif, system-ui, -apple-system, Segoe UI, "Noto Kufi Arabic", Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
   background:
-    radial-gradient(600px 200px at 50% 0%, rgba(255,255,255,.12), rgba(255,255,255,.02)),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-}
-.emoji{font-size:72px; line-height:1}
-.label{padding:10px 6px 4px; font-weight:800; text-align:center; color:var(--muted)}
-
-.controls{display:flex; gap:10px; justify-content:space-between; align-items:center; padding:0 2px 10px}
-
-.results{display:none; padding:10px 14px 14px}
-.results.show{display:block}
-.results-grid{
-  display:grid; gap:14px;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  justify-items:center;
+    radial-gradient(1200px 800px at 80% -10%, #8a2be2 0%, transparent 60%),
+    radial-gradient(900px 900px at -10% 110%, #ff2bd122 0%, transparent 60%),
+    linear-gradient(135deg, var(--bg1), var(--bg2) 55%, var(--bg3));
+  min-height: 100dvh;  /* iPhone safe viewport */
+  overflow-x:hidden;
+  -webkit-tap-highlight-color: transparent;
+  padding:
+    calc(env(safe-area-inset-top,0px))
+    calc(env(safe-area-inset-right,0px))
+    calc(env(safe-area-inset-bottom,0px))
+    calc(env(safe-area-inset-left,0px));
 }
 
-/* Phone-first tightening */
-@media (max-width:560px){
-  .grid,.results-grid{grid-template-columns:1fr}
-  .card{max-width:420px}
-  .imgbox{width:120px; height:120px;}      /* even smaller on iPhone */
-  .emoji{font-size:58px;}
+/* ====== BACKGROUND BLOBS ====== */
+.blob{
+  position:fixed; inset:auto;
+  width:60vw; height:60vw; max-width:700px; max-height:700px;
+  pointer-events:none; filter: blur(60px);
+  opacity:.35; mix-blend-mode:screen; z-index:0;
+}
+.blob.b1{ right:-10vw; top:-8vh; background:radial-gradient(closest-side at 60% 40%, #ff2bd1, transparent 70%); animation: float1 18s ease-in-out infinite; }
+.blob.b2{ left:-12vw; bottom:-14vh; background:radial-gradient(closest-side at 40% 55%, #7c3aed, transparent 70%); animation: float2 22s ease-in-out infinite; }
+.blob.b3{ left:15vw; top:30vh; background:radial-gradient(closest-side at 50% 50%, #00e5ff88, transparent 70%); animation: float3 26s ease-in-out infinite; }
+
+@keyframes float1{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(20px)} }
+@keyframes float2{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-25px)} }
+@keyframes float3{ 0%,100%{transform:translate(0,0)} 50%{transform:translate(10px,-15px)} }
+
+/* ====== TWINKLE PARTICLES (very subtle) ====== */
+#twinkle{
+  position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.35;
 }
 
-footer{padding:10px 14px 14px; display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:14px}
-.kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; border:1px solid var(--stroke); border-bottom-width:2px; padding:.1em .5em; border-radius:6px; background:rgba(255,255,255,.05)}
+/* ====== APP WRAPPER ====== */
+.app{
+  position:relative; z-index:1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px clamp(16px, 3vw, 28px) 36px;
+}
+
+/* Top bar */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom: 12px;
+}
+
+/* Reset button */
+.reset{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:46px; height:46px; border-radius:14px;
+  background: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+  border: 1px solid var(--soft-stroke);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  font-size:22px; color:var(--text); text-decoration:none;
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.reset:active{ transform: scale(.96); }
+
+/* Title */
+.title{
+  font-family: "Cairo Play","Changa",system-ui;
+  font-weight:700; letter-spacing:.2px; line-height:1.1;
+  font-size: clamp(26px, 5.6vw, 44px);
+  margin: 6px 0 18px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 6px 30px rgba(124,58,237,.35);
+}
+
+/* Panel (glass card container) */
+.panel{
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  border: 1px solid var(--stroke);
+  border-radius: 22px;
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+  padding: clamp(14px, 2.5vw, 22px);
+}
+
+/* Section heading */
+.section-title{
+  color:var(--muted);
+  font-size: clamp(14px, 3.2vw, 18px);
+  margin: 4px 6px 16px;
+}
+
+/* Choices grid */
+.choices{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:14px;
+}
+@media (min-width:540px){
+  .choices{ grid-template-columns: 1fr 1fr; }
+}
+@media (min-width:880px){
+  .choices{ grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* Choice card */
+.card{
+  position:relative;
+  background: rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  padding: 18px 18px 16px;
+  overflow:hidden;
+  cursor:pointer;
+  transition: transform .16s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.card::before{
+  content:"";
+  position:absolute; inset:0;
+  border-radius: inherit;
+  padding:1px; pointer-events:none;
+  background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.08));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+.card:hover{ transform: translateY(-2px); }
+.card:active{ transform: scale(.98); }
+.card.selected{
+  border-color: transparent;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.25), 0 0 32px 6px rgba(255, 43, 209, .35);
+  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+}
+
+/* Emoji/Icon box */
+.icon{
+  display:grid; place-items:center;
+  width: 112px; height:112px;
+  margin: 4px auto 10px;
+  border-radius: 26px;
+  background:
+   radial-gradient(120px 120px at 70% 20%, rgba(255,255,255,.25), rgba(255,255,255,.06)),
+   linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 10px 25px rgba(0,0,0,.25);
+  font-size:62px; line-height:1;
+}
+.label{
+  text-align:center;
+  font-size:18px;
+  color:#fff;
+  letter-spacing:.2px;
+}
+
+/* Small helper bar (progress line look) */
+.progress{
+  position:relative;
+  height:8px; border-radius:14px; overflow:hidden;
+  background: rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.16);
+  margin: 10px 6px 18px;
+}
+.progress > span{
+  position:absolute; inset:0 0; width:40%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  filter: drop-shadow(0 0 10px rgba(124,58,237,.55));
+  border-radius:inherit;
+}
+
+/* Footer note */
+.note{
+  color:var(--muted);
+  font-size:13px;
+  text-align:center;
+  margin-top:16px;
+  opacity:.9;
+}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .blob{ animation:none }
+}
 </style>
 </head>
 <body>
-<!-- animated-star background -->
-<canvas id="bg-stars" aria-hidden="true"></canvas>
 
-<main class="app" id="app">
-  <header>
-    <div class="brand">
-      <img class="logoimg" src="./logo_shensawi_neon.png" alt="شنسوي — by Fahad" onerror="this.style.display='none'"/>
-      <div class="title" id="appTitle">شنسوي الويكند؟</div>
+<canvas id="twinkle"></canvas>
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+<div class="blob b3"></div>
+
+<div class="app">
+  <div class="topbar">
+    <button class="reset" id="resetBtn" title="إعادة">
+      ⟳
+    </button>
+  </div>
+
+  <h1 class="title">شنسوي الويكند؟</h1>
+
+  <section class="panel">
+    <div class="progress" aria-hidden="true"><span style="width:33%"></span></div>
+    <h2 class="section-title">منو المجموعة؟</h2>
+
+    <div class="choices" id="choices">
+      <!-- Cards are injected by JS so you can scale later -->
     </div>
-    <button class="btn" id="resetBtn" type="button" title="إعادة البداية">↺ إعادة</button>
-  </header>
 
-  <div class="hero"><div class="progress" aria-hidden="true"><i id="bar"></i></div></div>
-
-  <section class="stage" id="stage" aria-live="polite"></section>
-  <section class="results" id="results"></section>
-
-  <footer>
-    <span class="muted">فلتر أنشطة — صور النتائج عناصر نائبة.</span>
-    <span class="muted">Tip: <span class="kbd">E</span> للتحرير السريع.</span>
-  </footer>
-</main>
+    <p class="note">لمسة فخامة — تصميم زجاجي، ألوان متدرجة، وتجربة مرنة على الآيفون.</p>
+  </section>
+</div>
 
 <script>
-/* ---------- Starry background (subtle “GIF-like” twinkle) ---------- */
-(function(){
-  const c = document.getElementById('bg-stars');
+/* ---------- DATA (edit/extend easily later) ---------- */
+const firstStepOptions = [
+  { id:'kids',   emoji:'👶', label:'أطفال' },
+  { id:'adults', emoji:'👫', label:'بالغين' },
+  { id:'mixed',  emoji:'👨‍👩‍👧‍👦', label:'مخلوط' },
+];
+
+/* ---------- RENDER ---------- */
+const choicesEl = document.getElementById('choices');
+function renderChoices(items){
+  choicesEl.innerHTML = '';
+  items.forEach(item=>{
+    const card = document.createElement('button');
+    card.className = 'card';
+    card.setAttribute('type','button');
+    card.setAttribute('aria-label', item.label);
+
+    card.innerHTML = `
+      <div class="icon" aria-hidden="true">${item.emoji}</div>
+      <div class="label">${item.label}</div>
+    `;
+
+    card.addEventListener('click', ()=>{
+      document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+      card.classList.add('selected');
+      // gentle ripple glow (CSS-only via selected)
+      // here you can progress to next step if needed
+    });
+
+    choicesEl.appendChild(card);
+  });
+}
+renderChoices(firstStepOptions);
+
+/* ---------- RESET ---------- */
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* ---------- TWINKLE CANVAS (ultra-light & subtle) ---------- */
+(function twinkle(){
+  const c = document.getElementById('twinkle');
   const ctx = c.getContext('2d');
-  let w, h, dpr, stars=[];
-  const STAR_COUNT_DESKTOP = 160;
-  const STAR_COUNT_MOBILE  = 90;
+  let w,h,stars;
 
   function resize(){
-    dpr = Math.max(1, window.devicePixelRatio || 1);
-    w = c.width  = Math.floor(innerWidth * dpr);
-    h = c.height = Math.floor(innerHeight * dpr);
-    c.style.width  = innerWidth + 'px';
-    c.style.height = innerHeight + 'px';
-    initStars();
-  }
-
-  function initStars(){
-    const count = (innerWidth < 560) ? STAR_COUNT_MOBILE : STAR_COUNT_DESKTOP;
-    stars = Array.from({length:count}).map((_,i)=>({
+    w = c.width = window.innerWidth;
+    h = c.height = window.innerHeight;
+    // sparse field — looks premium
+    stars = Array.from({length: Math.min(60, Math.floor(w*h/18000))}, () => ({
       x: Math.random()*w,
       y: Math.random()*h,
-      r: (Math.random()*1.6 + 0.4) * dpr,     // radius
-      o: Math.random()*0.7 + 0.15,            // base opacity
-      spx: (Math.random()*0.06 - 0.03)*dpr,   // slow drift
-      spy: (Math.random()*0.06 - 0.03)*dpr,
-      tw: Math.random()*6.28,                 // twinkle phase
-      tws: 0.003 + Math.random()*0.004        // twinkle speed
+      r: Math.random()*1.6 + .2,
+      a: Math.random()*1,
+      v: (Math.random()*0.6+0.2)/100
     }));
   }
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
 
-  function draw(){
-    // soft gradient sky
-    const g = ctx.createLinearGradient(0,0,0,h);
-    g.addColorStop(0,   '#3d0f70');
-    g.addColorStop(0.6, '#2d0a57');
-    g.addColorStop(1,   '#350e63');
-    ctx.fillStyle=g;
-    ctx.fillRect(0,0,w,h);
-
-    // stars
-    ctx.save();
-    for(const s of stars){
-      s.x += s.spx; s.y += s.spy;
-      if(s.x<0) s.x+=w; else if(s.x>w) s.x-=w;
-      if(s.y<0) s.y+=h; else if(s.y>h) s.y-=h;
-      s.tw += s.tws;
-
-      const alpha = s.o + Math.sin(s.tw)*0.25; // gentle twinkle
-      ctx.globalAlpha = Math.min(1, Math.max(0, alpha));
-
-      // faint glow
-      const radgrad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r*3);
-      radgrad.addColorStop(0, 'rgba(255,255,255,0.9)');
-      radgrad.addColorStop(1, 'rgba(255,255,255,0.0)');
-      ctx.fillStyle = radgrad;
+  (function loop(){
+    ctx.clearRect(0,0,w,h);
+    for (const s of stars){
+      s.a += s.v; const alpha = (1+Math.sin(s.a*6.283))*0.35 + 0.05;
       ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r*3, 0, Math.PI*2);
-      ctx.fill();
-
-      // sharp core
-      ctx.globalAlpha = Math.min(1, Math.max(0, alpha+0.1));
-      ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      const grad = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*3);
+      grad.addColorStop(0, `rgba(255,255,255,${alpha})`);
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = grad;
+      ctx.arc(s.x,s.y,s.r*3,0,Math.PI*2);
       ctx.fill();
     }
-    ctx.restore();
-
-    requestAnimationFrame(draw);
-  }
-
-  addEventListener('resize', resize);
-  resize(); draw();
+    requestAnimationFrame(loop);
+  })();
 })();
-
-/* ---------- App data ---------- */
-const DATA = {
-  meta:{title:"شنسوي الويكند؟", rtl:true},
-  questions:[
-    {id:"q0_group", text:"منو المجموعة؟", options:[
-      {id:"kids",   label:"أطفال",        emoji:"🧒", next:"q1_energy"},
-      {id:"adults", label:"بالغين",       emoji:"🧑‍🤝‍🧑", next:"q1_energy"},
-      {id:"mixed",  label:"عائلة/مختلط",  emoji:"👨‍👩‍👧‍👦", next:"q1_energy"}
-    ]},
-    {id:"q1_energy", text:"المود شنو تبيه؟", options:[
-      {id:"chill",    label:"هادي ومريح",    emoji:"🛋️", next:"q2_place"},
-      {id:"creative", label:"إبداعي/صنع شي", emoji:"🎨", next:"q2_place"},
-      {id:"active",   label:"حركي وممتع",    emoji:"⚡️", next:"q2_place"}
-    ]},
-    {id:"q2_place", text:"وين تفضل؟", options:[
-      {id:"indoor",  label:"داخل",           emoji:"🏠", next:"q3_time"},
-      {id:"outdoor", label:"خارج",           emoji:"🌤️", next:"q3_time"},
-      {id:"water",   label:"قريب من البحر",  emoji:"🌊", next:"q3_time"},
-      {id:"city",    label:"أماكن المدينة",   emoji:"🏙️", next:"q3_time"}
-    ]},
-    {id:"q3_time", text:"المدّة؟", options:[
-      {id:"quick",   label:"طلعة سريعة",   emoji:"⏱️", next:"result:auto"},
-      {id:"twoh",    label:"حوالي ساعتين", emoji:"🕑", next:"result:auto"},
-      {id:"evening", label:"سهرة كاملة",   emoji:"🌙", next:"result:auto"}
-    ]}
-  ],
-  activities:[
-    {id:"bowling",title:"بولينغ ممتع",groups:["adults","mixed","kids"],energy:"active",place:"indoor",duration:["twoh"],desc:"مسابقة سريعة بالكور والسترايك."},
-    {id:"trampoline",title:"ترامبولين بارك",groups:["kids","mixed"],energy:"active",place:"indoor",duration:["twoh"],desc:"قفز وحرق طاقة."},
-    {id:"escape",title:"غرفة هروب",groups:["adults","mixed"],energy:"active",place:"indoor",duration:["twoh"],desc:"ألغاز جماعية وسباق وقت."},
-    {id:"laser",title:"لايزر تاج",groups:["mixed","adults","kids"],energy:"active",place:"indoor",duration:["twoh","quick"],desc:"فرق وتحديات ليزر."},
-    {id:"arcade",title:"ألعاب آركيد وVR",groups:["mixed","adults","kids"],energy:"active",place:"indoor",duration:["quick","twoh"],desc:"سباقات ومحاكيات."},
-    {id:"bikes",title:"دراجات/سكوترات بالممشى",groups:["mixed","adults","kids"],energy:"active",place:"outdoor",duration:["twoh","quick"],desc:"نَسَمة ونشاط خفيف."},
-    {id:"kayak",title:"كاياك/قوارب",groups:["mixed","adults"],energy:"active",place:"water",duration:["twoh"],desc:"تجربة بحرية منعشة."},
-    {id:"minigolf",title:"ميني غولف",groups:["mixed","adults","kids"],energy:"active",place:"outdoor",duration:["twoh","quick"],desc:"منافسات بسيطة."},
-    {id:"climb",title:"تسلق جدار داخلي",groups:["mixed","adults"],energy:"active",place:"indoor",duration:["twoh"],desc:"تحدي عضلي آمن."},
-    {id:"iceskate",title:"تزلج على الجليد",groups:["mixed","adults","kids"],energy:"active",place:"indoor",duration:["twoh","quick"],desc:"لفّات ممتعة."},
-    {id:"cinema",title:"سينما",groups:["mixed","adults"],energy:"chill",place:"indoor",duration:["twoh","evening"],desc:"موفي نايت."},
-    {id:"corniche",title:"مشية على الكورنيش",groups:["mixed","adults","kids"],energy:"chill",place:"water",duration:["quick","twoh"],desc:"هواء بحر."},
-    {id:"beachsunset",title:"شاطئ وقت الغروب",groups:["mixed","adults","kids"],energy:"chill",place:"water",duration:["evening"],desc:"ألوان الغروب."},
-    {id:"parkplay",title:"حديقة وملاعب",groups:["kids","mixed"],energy:"chill",place:"outdoor",duration:["twoh","quick"],desc:"ألعاب وركض."},
-    {id:"boardcafe",title:"جلسة ألعاب لوحية",groups:["mixed","adults","kids"],energy:"chill",place:"indoor",duration:["twoh"],desc:"كاتان/أونو."},
-    {id:"library",title:"مكتبة/قراءة",groups:["adults","mixed"],energy:"chill",place:"indoor",duration:["quick","twoh"],desc:"قهوة وكتاب."},
-    {id:"stargaze",title:"تأمل نجوم",groups:["mixed","adults","kids"],energy:"chill",place:"outdoor",duration:["evening"],desc:"سماء صافية."},
-    {id:"desertcoffee",title:"قعدة صحراوية",groups:["mixed","adults"],energy:"chill",place:"outdoor",duration:["evening"],desc:"نار وقهوة."},
-    {id:"yoga",title:"يوغا/استرخاء",groups:["adults","mixed"],energy:"chill",place:"indoor",duration:["quick","twoh"],desc:"تنفّس ومرونة."},
-    {id:"paint",title:"ورشة رسم/تلوين",groups:["mixed","adults","kids"],energy:"creative",place:"indoor",duration:["twoh","quick"],desc:"ألوان ولوحات."},
-    {id:"pottery",title:"خزف وفخار",groups:["adults","mixed"],energy:"creative",place:"indoor",duration:["twoh"],desc:"عجلة وتلوين."},
-    {id:"science",title:"مركز علوم/تجارب",groups:["kids","mixed"],energy:"creative",place:"indoor",duration:["twoh"],desc:"تعليم ممتع."},
-    {id:"cityphoto",title:"جولة تصوير",groups:["adults","mixed"],energy:"creative",place:"city",duration:["twoh"],desc:"ستريت فوتو."},
-    {id:"sandart",title:"فن بالرمل",groups:["kids"],energy:"creative",place:"indoor",duration:["twoh","quick"],desc:"آمنة للصغار."},
-    {id:"mirrors",title:"متاهة مرايا/رعب",groups:["mixed","adults","kids"],energy:"creative",place:"indoor",duration:["quick"],desc:"تجربة حسّية."},
-    {id:"cook",title:"ورشة طبخ عائلية",groups:["mixed"],energy:"creative",place:"indoor",duration:["twoh"],desc:"وصفة سهلة."},
-    {id:"craftmarket",title:"سوق حرفي",groups:["adults","mixed"],energy:"creative",place:"city",duration:["twoh","quick"],desc:"منتجات فنية."}
-  ]
-};
-
-/* ---------- State ---------- */
-const stageEl = document.getElementById('stage');
-const resultsEl = document.getElementById('results');
-const barEl = document.getElementById('bar');
-const resetBtn = document.getElementById('resetBtn');
-const titleEl = document.getElementById('appTitle');
-
-let answers=[]; let currentQ=DATA.questions[0].id;
-const qIndexById = Object.fromEntries(DATA.questions.map((q,i)=>[q.id,i]));
-
-document.documentElement.dir = DATA.meta?.rtl===false ? 'ltr' : 'rtl';
-titleEl.textContent = DATA.meta?.title || titleEl.textContent;
-
-/* ---------- Render ---------- */
-function render(){
-  resultsEl.classList.remove('show');
-  stageEl.innerHTML='';
-  const q = DATA.questions[qIndexById[currentQ]];
-  if(!q){ return showResults(); }
-
-  const step = qIndexById[currentQ]+1;
-  const total = DATA.questions.length;
-  barEl.style.width = Math.round((step-1)/total*100)+'%';
-
-  const qEl = document.createElement('div');
-  qEl.className='question';
-  qEl.textContent=q.text;
-  stageEl.appendChild(qEl);
-
-  const grid=document.createElement('div'); grid.className='grid';
-
-  q.options.forEach(opt=>{
-    const card=document.createElement('div'); card.className='card';
-    const btn=document.createElement('button'); btn.type='button'; btn.setAttribute('aria-label', opt.label);
-    btn.addEventListener('click', ()=>select(opt), {passive:true});
-
-    const img=document.createElement('div'); img.className='imgbox';
-    img.innerHTML=`<span class="emoji">${opt.emoji||'⭐'}</span>`;
-    const lab=document.createElement('div'); lab.className='label'; lab.textContent=opt.label;
-
-    btn.appendChild(img); btn.appendChild(lab);
-    card.appendChild(btn);
-    grid.appendChild(card);
-  });
-
-  stageEl.appendChild(grid);
-
-  const ctr=document.createElement('div'); ctr.className='controls';
-  const back=document.createElement('button'); back.className='btn'; back.textContent='رجوع'; back.disabled=answers.length===0;
-  back.addEventListener('click', goBack);
-  const skip=document.createElement('button'); skip.className='btn'; skip.textContent='تخطي';
-  skip.addEventListener('click', ()=>{
-    answers.push({q:q.id,o:null});
-    advance(q,{next:q.options[0]?.next||null});
-  });
-  ctr.appendChild(back); ctr.appendChild(skip);
-  stageEl.appendChild(ctr);
-}
-
-function select(opt){
-  const q = DATA.questions[qIndexById[currentQ]];
-  answers.push({q:q.id,o:opt.id});
-  advance(q,opt);
-}
-
-function advance(q,opt){
-  const nxt=opt.next||null;
-  if(nxt && nxt.startsWith('result:auto')) showResults();
-  else if(nxt){ currentQ=nxt; render(); }
-  else showResults();
-}
-
-function goBack(){
-  if(!answers.length) return;
-  answers.pop();
-  const prev = answers.length ? answers[answers.length-1].q : DATA.questions[0].id;
-  currentQ = prev; render();
-}
-
-/* ---------- Results ---------- */
-function showResults(){
-  stageEl.innerHTML='';
-  barEl.style.width='100%';
-
-  const prefs={
-    group:getAnswer('q0_group'),
-    energy:getAnswer('q1_energy'),
-    place:getAnswer('q2_place'),
-    time:getAnswer('q3_time')
-  };
-
-  const scored = DATA.activities.map(a=>{
-    if(prefs.group && !a.groups.includes(prefs.group)) return null;
-    let s=0;
-    if(prefs.energy && a.energy===prefs.energy) s+=3;
-    if(prefs.place){
-      if(a.place===prefs.place) s+=3;
-      else if((prefs.place==='water' && a.place==='outdoor')||(prefs.place==='outdoor' && a.place==='water')) s+=1;
-      else if(prefs.place==='city' && (a.place==='indoor'||a.place==='outdoor')) s+=1;
-    }
-    if(prefs.time && a.duration?.includes(prefs.time)) s+=2;
-    if(prefs.group==='mixed' && a.groups.includes('kids')) s+=1;
-    return {a, s};
-  }).filter(Boolean).sort((x,y)=>y.s-x.s);
-
-  const picks = scored.slice(0, Math.max(3, Math.min(6, scored.length))).map(x=>x.a);
-  resultsEl.innerHTML='';
-  const title=document.createElement('div'); title.className='question'; title.textContent='اقتراحات تناسب اختياراتك';
-  const grid=document.createElement('div'); grid.className='results-grid';
-
-  (picks.length ? picks : DATA.activities.slice(0,3)).forEach(item=>{
-    const card=document.createElement('div'); card.className='card';
-    const img=document.createElement('div'); img.className='imgbox'; img.innerHTML=`<span class="emoji">✨</span>`;
-    const lab=document.createElement('div'); lab.className='label'; lab.innerHTML=`<div style="font-weight:800">${escapeHTML(item.title)}</div><div class="muted" style="font-weight:500">${escapeHTML(item.desc||'')}</div>`;
-    card.appendChild(img); card.appendChild(lab);
-    grid.appendChild(card);
-  });
-
-  resultsEl.appendChild(title);
-  resultsEl.appendChild(grid);
-  const ctr=document.createElement('div'); ctr.className='controls';
-  const again=document.createElement('button'); again.className='btn primary'; again.textContent='ابدأ من جديد'; again.addEventListener('click', reset);
-  const tweak=document.createElement('button'); tweak.className='btn'; tweak.textContent='تعديل الاختيارات'; tweak.addEventListener('click', ()=>goBack());
-  ctr.appendChild(again); ctr.appendChild(tweak);
-  resultsEl.appendChild(ctr);
-
-  resultsEl.classList.add('show');
-}
-
-function getAnswer(qid){
-  const found=[...answers].reverse().find(x=>x.q===qid && x.o!==null);
-  return found?found.o:null;
-}
-function reset(){ answers=[]; currentQ=DATA.questions[0].id; render(); }
-resetBtn.addEventListener('click', reset);
-
-/* quick text edit mode */
-let edit=false;
-window.addEventListener('keydown',e=>{
-  if(e.key.toLowerCase()==='e'){
-    edit=!edit; alert(edit?'وضع التحرير السريع: اضغط على النصوص لتعديلها.':'تم إيقاف وضع التحرير.');
-  }
-});
-stageEl.addEventListener('click',e=>{
-  if(!edit) return; const el=e.target.closest('.label'); if(!el) return;
-  const current=el.textContent.trim(); const next=prompt('حرّر النص:', current);
-  if(next!==null) el.textContent=next;
-});
-
-function escapeHTML(s){
-  return (s||'').replace(/[&<>\"']/g, m => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"
-  }[m]));
-}
-
-document.addEventListener('DOMContentLoaded',render);
 </script>
 </body>
 </html>
