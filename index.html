@@ -5,185 +5,141 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>شنسوي الويكند؟</title>
 
-<!-- Luxury, modern fonts (Arabic + Latin) -->
+<!-- Modern, luxury fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@600;700&family=Changa:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* ====== THEME ====== */
 :root{
-  --bg1:#0c001c;    /* deep aubergine */
-  --bg2:#2a0a5e;    /* royal violet */
-  --bg3:#5b1ca1;    /* electric purple */
+  --bg1:#0c001c; --bg2:#2a0a5e; --bg3:#5b1ca1;
   --glass:rgba(255,255,255,.08);
   --stroke:rgba(255,255,255,.22);
   --soft-stroke:rgba(255,255,255,.14);
-  --text:#ffffff;
-  --muted:#d7d7e0;
-  --accent:#ff2bd1;   /* neon pink */
-  --accent2:#7c3aed;  /* vivid purple */
+  --text:#fff; --muted:#cfd2de;
+  --accent:#ff2bd1; --accent2:#7c3aed;
   --shadow: 0 10px 35px rgba(0,0,0,.35);
 }
 
-/* ====== RESET ====== */
 *{box-sizing:border-box}
 html,body{height:100%}
-html,body,div,span,applet,object,iframe,
-h1,h2,h3,h4,h5,h6,p,blockquote,pre,
-a,abbr,acronym,address,big,cite,code,
-del,dfn,em,img,ins,kbd,q,s,samp,
-small,strike,strong,sub,sup,tt,var,
-b,u,i,center,dl,dt,dd,ol,ul,li,
-fieldset,form,label,legend,
-table,caption,tbody,tfoot,thead,tr,th,td,
-article,aside,canvas,details,embed,
-figure,figcaption,footer,header,hgroup,
-menu,nav,output,ruby,section,summary,
-time,mark,audio,video{margin:0;padding:0;border:0;font:inherit;vertical-align:baseline}
-
 body{
-  color:var(--text);
-  font-family: "Changa", "Cairo Play", "Poppins", ui-sans-serif, system-ui, -apple-system, Segoe UI, "Noto Kufi Arabic", Arial, sans-serif;
+  margin:0; color:var(--text);
+  font-family:"Changa","Cairo Play","Poppins",ui-sans-serif,system-ui,-apple-system,Segoe UI,"Noto Kufi Arabic",Arial,sans-serif;
   -webkit-font-smoothing:antialiased;
   background:
     radial-gradient(1200px 800px at 80% -10%, #8a2be2 0%, transparent 60%),
     radial-gradient(900px 900px at -10% 110%, #ff2bd122 0%, transparent 60%),
     linear-gradient(135deg, var(--bg1), var(--bg2) 55%, var(--bg3));
-  min-height: 100dvh;  /* iPhone safe viewport */
+  min-height:100dvh;
   overflow-x:hidden;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color:transparent;
   padding:
     calc(env(safe-area-inset-top,0px))
     calc(env(safe-area-inset-right,0px))
     calc(env(safe-area-inset-bottom,0px))
     calc(env(safe-area-inset-left,0px));
+  position:relative;
 }
 
-/* ====== BACKGROUND BLOBS ====== */
-.blob{
-  position:fixed; inset:auto;
-  width:60vw; height:60vw; max-width:700px; max-height:700px;
-  pointer-events:none; filter: blur(60px);
-  opacity:.35; mix-blend-mode:screen; z-index:0;
-}
-.blob.b1{ right:-10vw; top:-8vh; background:radial-gradient(closest-side at 60% 40%, #ff2bd1, transparent 70%); animation: float1 18s ease-in-out infinite; }
-.blob.b2{ left:-12vw; bottom:-14vh; background:radial-gradient(closest-side at 40% 55%, #7c3aed, transparent 70%); animation: float2 22s ease-in-out infinite; }
-.blob.b3{ left:15vw; top:30vh; background:radial-gradient(closest-side at 50% 50%, #00e5ff88, transparent 70%); animation: float3 26s ease-in-out infinite; }
-
-@keyframes float1{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(20px)} }
-@keyframes float2{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-25px)} }
-@keyframes float3{ 0%,100%{transform:translate(0,0)} 50%{transform:translate(10px,-15px)} }
-
-/* ====== TWINKLE PARTICLES (very subtle) ====== */
+/* Background visuals (never block taps) */
+.blob, #twinkle{ pointer-events:none; }
 #twinkle{
-  position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.35;
+  position:fixed; inset:0; z-index:0; opacity:.35;
 }
+.blob{
+  position:fixed; z-index:0; filter:blur(60px); opacity:.35; mix-blend-mode:screen;
+  width:60vw; height:60vw; max-width:700px; max-height:700px;
+}
+.blob.b1{ right:-10vw; top:-8vh; background:radial-gradient(closest-side at 60% 40%, #ff2bd1, transparent 70%); animation:float1 18s ease-in-out infinite; }
+.blob.b2{ left:-12vw; bottom:-14vh; background:radial-gradient(closest-side at 40% 55%, #7c3aed, transparent 70%); animation:float2 22s ease-in-out infinite; }
+.blob.b3{ left:15vw; top:30vh; background:radial-gradient(closest-side at 50% 50%, #00e5ff88, transparent 70%); animation:float3 26s ease-in-out infinite; }
 
-/* ====== APP WRAPPER ====== */
+@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(20px)}}
+@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-25px)}}
+@keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(10px,-15px)}}
+
+/* App layer (always above visuals) */
 .app{
   position:relative; z-index:1;
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 20px clamp(16px, 3vw, 28px) 36px;
+  max-width:900px; margin:0 auto;
+  padding:20px clamp(16px,3vw,28px) 40px;
 }
 
 /* Top bar */
-.topbar{
-  display:flex; align-items:center; justify-content:space-between;
-  margin-bottom: 12px;
-}
-
-/* Reset button */
+.topbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
 .reset{
   display:inline-flex; align-items:center; justify-content:center;
   width:46px; height:46px; border-radius:14px;
-  background: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
-  border: 1px solid var(--soft-stroke);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow);
-  font-size:22px; color:var(--text); text-decoration:none;
-  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  background:linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+  border:1px solid var(--soft-stroke); backdrop-filter:blur(10px);
+  box-shadow:var(--shadow); font-size:22px; color:var(--text);
+  transition:transform .15s ease;
 }
-.reset:active{ transform: scale(.96); }
+.reset:active{ transform:scale(.96); }
 
 /* Title */
 .title{
-  font-family: "Cairo Play","Changa",system-ui;
-  font-weight:700; letter-spacing:.2px; line-height:1.1;
-  font-size: clamp(26px, 5.6vw, 44px);
-  margin: 6px 0 18px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 6px 30px rgba(124,58,237,.35);
+  font-family:"Cairo Play","Changa",system-ui; font-weight:700; line-height:1.1;
+  font-size:clamp(26px,5.6vw,44px); margin:6px 0 14px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  text-shadow:0 6px 30px rgba(124,58,237,.35);
 }
 
-/* Panel (glass card container) */
+/* Panels */
 .panel{
-  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-  border: 1px solid var(--stroke);
-  border-radius: 22px;
-  backdrop-filter: blur(18px);
-  box-shadow: var(--shadow);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  border:1px solid var(--stroke); border-radius:22px; backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
   padding: clamp(14px, 2.5vw, 22px);
+  margin-bottom:18px;
+}
+.section-title{ color:var(--muted); font-size:clamp(14px,3.2vw,18px); margin:2px 6px 14px; }
+
+/* Progress */
+.progress{
+  height:8px; border-radius:14px; overflow:hidden;
+  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.16);
+  margin:6px 6px 16px; position:relative;
+}
+.progress > span{
+  position:absolute; inset:0 0; width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  filter:drop-shadow(0 0 10px rgba(124,58,237,.55));
+  border-radius:inherit; transition:width .3s ease;
 }
 
-/* Section heading */
-.section-title{
-  color:var(--muted);
-  font-size: clamp(14px, 3.2vw, 18px);
-  margin: 4px 6px 16px;
-}
+/* Grid */
+.choices{ display:grid; grid-template-columns:1fr; gap:14px; }
+@media (min-width:540px){ .choices{ grid-template-columns:1fr 1fr; } }
+@media (min-width:880px){ .choices{ grid-template-columns:1fr 1fr 1fr; } }
 
-/* Choices grid */
-.choices{
-  display:grid;
-  grid-template-columns: 1fr;
-  gap:14px;
-}
-@media (min-width:540px){
-  .choices{ grid-template-columns: 1fr 1fr; }
-}
-@media (min-width:880px){
-  .choices{ grid-template-columns: 1fr 1fr 1fr; }
-}
-
-/* Choice card */
+/* Choice card (button) */
 .card{
-  position:relative;
-  background: rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.2);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  padding: 18px 18px 16px;
-  overflow:hidden;
-  cursor:pointer;
-  transition: transform .16s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  position:relative; display:block; width:100%;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
+  border-radius:20px; backdrop-filter:blur(10px);
+  padding:18px 18px 16px; overflow:hidden; cursor:pointer;
+  transition: transform .16s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+  text-align:center;
 }
 .card::before{
-  content:"";
-  position:absolute; inset:0;
-  border-radius: inherit;
-  padding:1px; pointer-events:none;
-  background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.08));
+  content:""; position:absolute; inset:0; border-radius:inherit; padding:1px; pointer-events:none;
+  background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.08));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
+  -webkit-mask-composite:xor; mask-composite:exclude;
 }
-.card:hover{ transform: translateY(-2px); }
-.card:active{ transform: scale(.98); }
+.card:hover{ transform:translateY(-2px); }
+.card:active{ transform:scale(.98); }
 .card.selected{
-  border-color: transparent;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.25), 0 0 32px 6px rgba(255, 43, 209, .35);
-  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+  border-color:transparent;
+  box-shadow:0 0 0 2px rgba(255,255,255,.25), 0 0 32px 6px rgba(255,43,209,.35);
+  background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
 }
-
-/* Emoji/Icon box */
 .icon{
-  display:grid; place-items:center;
-  width: 112px; height:112px;
-  margin: 4px auto 10px;
-  border-radius: 26px;
+  display:grid; place-items:center; width:112px; height:112px; margin:4px auto 10px;
+  border-radius:26px;
   background:
    radial-gradient(120px 120px at 70% 20%, rgba(255,255,255,.25), rgba(255,255,255,.06)),
    linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
@@ -191,144 +147,202 @@ body{
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 10px 25px rgba(0,0,0,.25);
   font-size:62px; line-height:1;
 }
-.label{
-  text-align:center;
-  font-size:18px;
-  color:#fff;
-  letter-spacing:.2px;
-}
+.label{ font-size:18px; letter-spacing:.2px; }
 
-/* Small helper bar (progress line look) */
-.progress{
-  position:relative;
-  height:8px; border-radius:14px; overflow:hidden;
-  background: rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.16);
-  margin: 10px 6px 18px;
+/* Result card */
+.result{
+  text-align:center; padding:16px;
 }
-.progress > span{
-  position:absolute; inset:0 0; width:40%;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  filter: drop-shadow(0 0 10px rgba(124,58,237,.55));
-  border-radius:inherit;
+.result h3{
+  font-size:clamp(20px,4.5vw,28px); margin:6px 0 10px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
+.result p{ color:#f0eaf7; }
 
-/* Footer note */
-.note{
-  color:var(--muted);
-  font-size:13px;
-  text-align:center;
-  margin-top:16px;
-  opacity:.9;
-}
+/* Hide utility */
+.hidden{ display:none !important; }
 
-/* Reduce motion preference */
-@media (prefers-reduced-motion: reduce) {
-  .blob{ animation:none }
-}
+@media (prefers-reduced-motion: reduce){ .blob{animation:none} }
 </style>
 </head>
 <body>
 
-<canvas id="twinkle"></canvas>
-<div class="blob b1"></div>
-<div class="blob b2"></div>
-<div class="blob b3"></div>
+<canvas id="twinkle" aria-hidden="true"></canvas>
+<div class="blob b1" aria-hidden="true"></div>
+<div class="blob b2" aria-hidden="true"></div>
+<div class="blob b3" aria-hidden="true"></div>
 
-<div class="app">
+<div class="app" id="app">
   <div class="topbar">
-    <button class="reset" id="resetBtn" title="إعادة">
-      ⟳
-    </button>
+    <button class="reset" id="resetBtn" title="إعادة">⟳</button>
   </div>
 
   <h1 class="title">شنسوي الويكند؟</h1>
 
-  <section class="panel">
-    <div class="progress" aria-hidden="true"><span style="width:33%"></span></div>
+  <!-- STEP 1 -->
+  <section id="step1" class="panel" aria-label="الخطوة الأولى">
+    <div class="progress"><span id="bar1" style="width:33%"></span></div>
     <h2 class="section-title">منو المجموعة؟</h2>
+    <div class="choices" id="choicesStep1"></div>
+  </section>
 
-    <div class="choices" id="choices">
-      <!-- Cards are injected by JS so you can scale later -->
+  <!-- STEP 2 -->
+  <section id="step2" class="panel hidden" aria-label="الخطوة الثانية">
+    <div class="progress"><span id="bar2" style="width:66%"></span></div>
+    <h2 class="section-title">الجو العام شنو ودّكم؟</h2>
+    <div class="choices" id="choicesStep2"></div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="stepResult" class="panel hidden" aria-live="polite" aria-label="النتيجة">
+    <div class="progress"><span id="bar3" style="width:100%"></span></div>
+    <div class="result" id="resultBox">
+      <h3>النتيجة</h3>
+      <p>اختر خياراتك لنعرض لك اقتراح جميل للويكند ✨</p>
     </div>
-
-    <p class="note">لمسة فخامة — تصميم زجاجي، ألوان متدرجة، وتجربة مرنة على الآيفون.</p>
   </section>
 </div>
 
 <script>
-/* ---------- DATA (edit/extend easily later) ---------- */
-const firstStepOptions = [
-  { id:'kids',   emoji:'👶', label:'أطفال' },
-  { id:'adults', emoji:'👫', label:'بالغين' },
+/* ---------- Data ---------- */
+const STEP1 = [
+  { id:'kids',   emoji:'👶',  label:'أطفال' },
+  { id:'adults', emoji:'🧑‍🤝‍🧑', label:'بالغين' },
   { id:'mixed',  emoji:'👨‍👩‍👧‍👦', label:'مخلوط' },
 ];
 
-/* ---------- RENDER ---------- */
-const choicesEl = document.getElementById('choices');
-function renderChoices(items){
-  choicesEl.innerHTML = '';
-  items.forEach(item=>{
-    const card = document.createElement('button');
-    card.className = 'card';
-    card.setAttribute('type','button');
-    card.setAttribute('aria-label', item.label);
+const STEP2 = {
+  kids: [
+    { id:'active', emoji:'🎡', label:'حركة وفعاليات' },
+    { id:'chill',  emoji:'🎨', label:'فني وهادئ' },
+    { id:'eat',    emoji:'🍔', label:'أكل ولذّة' },
+  ],
+  adults: [
+    { id:'lux',    emoji:'🥂', label:'فخم وراقي' },
+    { id:'out',    emoji:'🌆', label:'طلعة وجو' },
+    { id:'games',  emoji:'🎲', label:'ألعاب وتحدي' },
+  ],
+  mixed: [
+    { id:'park',   emoji:'🌳', label:'حديقة ونشاط' },
+    { id:'mall',   emoji:'🛍️', label:'مول وتسوّق' },
+    { id:'home',   emoji:'🏠', label:'بيت وترفيه' },
+  ]
+};
 
-    card.innerHTML = `
-      <div class="icon" aria-hidden="true">${item.emoji}</div>
-      <div class="label">${item.label}</div>
-    `;
+/* Simple suggestion map (replace with your real list later) */
+const SUGGESTIONS = {
+  'kids|active': 'كيدزانيا أو ملاهي داخليّة + آيسكريم بعدين 🍦',
+  'kids|chill':  'ورشة رسم / صلصال ثم كافيه لطيف للعائلة ☕️',
+  'kids|eat':    'مطعم عائلي مع منطقة لعب، وختموها بحلو 😋',
 
-    card.addEventListener('click', ()=>{
-      document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
-      card.classList.add('selected');
-      // gentle ripple glow (CSS-only via selected)
-      // here you can progress to next step if needed
-    });
+  'adults|lux':  'ディナー شيك + قهوة مختصّة بمكان هادي ✨',
+  'adults|out':  'كورنيش + مشي خفيف ثم كوفي مع ڤيو البحر 🌊',
+  'adults|games':'Escape Room أو ألعاب لوحية بمقهى ألعاب 🎯',
 
-    choicesEl.appendChild(card);
-  });
+  'mixed|park':  'حديقة + فودتراك + ألعاب خفيفة للجميع 🧺',
+  'mixed|mall':  'مول: تسوّق خفيف + مطعم يناسب الكل 🛍️',
+  'mixed|home':  'ليلة ألعاب بالبيت + سناكات وسينما منزلية 🎬'
+};
+
+/* ---------- Helpers ---------- */
+const $ = sel => document.querySelector(sel);
+function createCard(option, onClick){
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'card';
+  btn.innerHTML = `
+    <div class="icon" aria-hidden="true">${option.emoji}</div>
+    <div class="label">${option.label}</div>
+  `;
+  btn.addEventListener('click', () => onClick(option, btn), {passive:true});
+  return btn;
 }
-renderChoices(firstStepOptions);
+function show(id){ $(id).classList.remove('hidden'); }
+function hide(id){ $(id).classList.add('hidden'); }
+function setBar(el, w){ el.style.width = w; }
 
-/* ---------- RESET ---------- */
-document.getElementById('resetBtn').addEventListener('click', ()=>{
+/* ---------- Render Step 1 ---------- */
+const s1 = $('#choicesStep1');
+STEP1.forEach(opt=>{
+  s1.appendChild(createCard(opt, (o,btn)=>{
+    // select visual
+    s1.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+    btn.classList.add('selected');
+    // progress to step 2
+    buildStep2(o.id);
+  }));
+});
+
+/* ---------- Build & Show Step 2 ---------- */
+let chosenGroup = null, chosenMood = null;
+
+function buildStep2(groupId){
+  chosenGroup = groupId; chosenMood = null;
+  const container = $('#choicesStep2');
+  container.innerHTML = '';
+  (STEP2[groupId] || []).forEach(opt=>{
+    container.appendChild(createCard(opt, (o,btn)=>{
+      container.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+      btn.classList.add('selected');
+      chosenMood = o.id;
+      showResult();
+    }));
+  });
+  hide('#stepResult');
+  show('#step2');
+  setBar($('#bar2'), '66%');
+  window.scrollTo({top: $('#step2').offsetTop - 12, behavior:'smooth'});
+}
+
+/* ---------- Show Result ---------- */
+function showResult(){
+  const key = `${chosenGroup}|${chosenMood}`;
+  const text = SUGGESTIONS[key] || 'اختيارات جميلة! بتجهيز لكم اقتراح مميز.';
+  $('#resultBox').innerHTML = `
+    <h3>اقتراحنا للويكند</h3>
+    <p>${text}</p>
+  `;
+  show('#stepResult');
+  setBar($('#bar3'), '100%');
+  window.scrollTo({top: $('#stepResult').offsetTop - 12, behavior:'smooth'});
+}
+
+/* ---------- Reset ---------- */
+$('#resetBtn').addEventListener('click', ()=>{
+  // visuals
   document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+  // state
+  chosenGroup = null; chosenMood = null;
+  // sections
+  show('#step1'); hide('#step2'); hide('#stepResult');
+  setBar($('#bar1'), '33%'); setBar($('#bar2'), '0%'); setBar($('#bar3'), '0%');
   window.scrollTo({top:0, behavior:'smooth'});
 });
 
-/* ---------- TWINKLE CANVAS (ultra-light & subtle) ---------- */
+/* ---------- Twinkle (non-blocking) ---------- */
 (function twinkle(){
   const c = document.getElementById('twinkle');
-  const ctx = c.getContext('2d');
-  let w,h,stars;
-
+  const ctx = c.getContext('2d',{alpha:true});
+  let w,h,stars=[];
   function resize(){
     w = c.width = window.innerWidth;
     h = c.height = window.innerHeight;
-    // sparse field — looks premium
     stars = Array.from({length: Math.min(60, Math.floor(w*h/18000))}, () => ({
-      x: Math.random()*w,
-      y: Math.random()*h,
-      r: Math.random()*1.6 + .2,
-      a: Math.random()*1,
-      v: (Math.random()*0.6+0.2)/100
+      x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.6+.2,
+      a: Math.random(), v: (Math.random()*0.6+0.2)/100
     }));
   }
-  window.addEventListener('resize', resize, {passive:true});
-  resize();
-
+  window.addEventListener('resize', resize, {passive:true}); resize();
   (function loop(){
     ctx.clearRect(0,0,w,h);
-    for (const s of stars){
+    for(const s of stars){
       s.a += s.v; const alpha = (1+Math.sin(s.a*6.283))*0.35 + 0.05;
       ctx.beginPath();
-      const grad = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*3);
-      grad.addColorStop(0, `rgba(255,255,255,${alpha})`);
-      grad.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = grad;
-      ctx.arc(s.x,s.y,s.r*3,0,Math.PI*2);
-      ctx.fill();
+      const g = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*3);
+      g.addColorStop(0,`rgba(255,255,255,${alpha})`);
+      g.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle=g; ctx.arc(s.x,s.y,s.r*3,0,Math.PI*2); ctx.fill();
     }
     requestAnimationFrame(loop);
   })();
