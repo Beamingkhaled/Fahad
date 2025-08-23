@@ -1,237 +1,375 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>شنسوي الويكند؟</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>شنسوي الويكند؟ — نسخة فخمة وقابلة للتوسّع</title>
 
-<!-- Modern, luxury fonts -->
+<!-- Luxury fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@600;700&family=Changa:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@600;700&family=Changa:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+/* ======================================================================
+   THEME TOKENS (explicit on purpose so it's verbose + easy to tweak)
+   ====================================================================== */
 :root{
-  --bg1:#0c001c; --bg2:#2a0a5e; --bg3:#5b1ca1;
-  --glass:rgba(255,255,255,.08);
-  --stroke:rgba(255,255,255,.22);
-  --soft-stroke:rgba(255,255,255,.14);
-  --text:#fff; --muted:#cfd2de;
-  --accent:#ff2bd1; --accent2:#7c3aed;
-  --shadow: 0 10px 35px rgba(0,0,0,.35);
+  /* Background palette */
+  --bg-1:#0c001c;         /* deep aubergine */
+  --bg-2:#2a0a5e;         /* royal violet  */
+  --bg-3:#5b1ca1;         /* electric purple */
+
+  /* Text */
+  --text:#ffffff;
+  --muted:#d5d7e2;
+
+  /* Glass / borders / shadows */
+  --glass-1:rgba(255,255,255,.08);
+  --glass-2:rgba(255,255,255,.12);
+  --stroke-strong:rgba(255,255,255,.26);
+  --stroke-soft:rgba(255,255,255,.16);
+  --inner-stroke:rgba(255,255,255,.10);
+  --shadow-1:0 10px 35px rgba(0,0,0,.35);
+  --shadow-2:0 8px 18px rgba(0,0,0,.25);
+
+  /* Accents */
+  --accent-1:#ff2bd1;     /* neon pink  */
+  --accent-2:#7c3aed;     /* vivid purple */
+  --accent-3:#00e5ff;     /* cyan touch */
+
+  /* Radii */
+  --radius-xl:22px;
+  --radius-lg:20px;
+  --radius-md:16px;
+
+  /* Sizes */
+  --icon-size:64px;
+  --choice-icon-box:116px;
+
+  /* Durations / easing */
+  --fast:.12s;
+  --norm:.22s;
+  --ease:cubic-bezier(.2,.8,.2,1);
 }
 
+/* ======================================================================
+   RESET / BASE
+   ====================================================================== */
 *{box-sizing:border-box}
 html,body{height:100%}
+html{scroll-behavior:smooth}
+
 body{
-  margin:0; color:var(--text);
-  font-family:"Changa","Cairo Play","Poppins",ui-sans-serif,system-ui,-apple-system,Segoe UI,"Noto Kufi Arabic",Arial,sans-serif;
+  margin:0;
+  color:var(--text);
+  font-family:"Changa","Cairo Play",ui-sans-serif,system-ui,-apple-system,Segoe UI,"Noto Kufi Arabic",Arial,sans-serif;
   -webkit-font-smoothing:antialiased;
   background:
     radial-gradient(1200px 800px at 80% -10%, #8a2be2 0%, transparent 60%),
     radial-gradient(900px 900px at -10% 110%, #ff2bd122 0%, transparent 60%),
-    linear-gradient(135deg, var(--bg1), var(--bg2) 55%, var(--bg3));
+    linear-gradient(135deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
   min-height:100dvh;
   overflow-x:hidden;
   -webkit-tap-highlight-color:transparent;
   padding:
-    calc(env(safe-area-inset-top,0px))
-    calc(env(safe-area-inset-right,0px))
-    calc(env(safe-area-inset-bottom,0px))
-    calc(env(safe-area-inset-left,0px));
-  position:relative;
+    env(safe-area-inset-top,0)
+    env(safe-area-inset-right,0)
+    env(safe-area-inset-bottom,0)
+    env(safe-area-inset-left,0);
 }
 
-/* Background visuals (never block taps) */
-.blob, #twinkle{ pointer-events:none; }
-#twinkle{
-  position:fixed; inset:0; z-index:0; opacity:.35;
-}
-.blob{
-  position:fixed; z-index:0; filter:blur(60px); opacity:.35; mix-blend-mode:screen;
-  width:60vw; height:60vw; max-width:700px; max-height:700px;
-}
-.blob.b1{ right:-10vw; top:-8vh; background:radial-gradient(closest-side at 60% 40%, #ff2bd1, transparent 70%); animation:float1 18s ease-in-out infinite; }
-.blob.b2{ left:-12vw; bottom:-14vh; background:radial-gradient(closest-side at 40% 55%, #7c3aed, transparent 70%); animation:float2 22s ease-in-out infinite; }
-.blob.b3{ left:15vw; top:30vh; background:radial-gradient(closest-side at 50% 50%, #00e5ff88, transparent 70%); animation:float3 26s ease-in-out infinite; }
+/* ======================================================================
+   UTILITIES (verbose on purpose)
+   ====================================================================== */
+.u-max{max-width:100%}
+.u-w-100{width:100%}
+.u-center{margin-inline:auto}
+.u-text-center{text-align:center}
+.u-muted{color:var(--muted)}
+.u-hidden{display:none!important}
+.u-block{display:block}
+.u-flex{display:flex}
+.u-grid{display:grid}
+.u-gap-8{gap:8px}
+.u-gap-12{gap:12px}
+.u-gap-14{gap:14px}
+.u-gap-16{gap:16px}
+.u-p-0{padding:0}
+.u-p-8{padding:8px}
+.u-p-12{padding:12px}
+.u-p-16{padding:16px}
+.u-p-18{padding:18px}
+.u-p-20{padding:20px}
+.u-p-24{padding:24px}
+.u-mb-8{margin-bottom:8px}
+.u-mb-12{margin-bottom:12px}
+.u-mb-14{margin-bottom:14px}
+.u-mb-16{margin-bottom:16px}
+.u-mb-18{margin-bottom:18px}
+.u-mb-20{margin-bottom:20px}
+.u-radius-xl{border-radius:var(--radius-xl)}
+.u-radius-lg{border-radius:var(--radius-lg)}
+.u-shadow-1{box-shadow:var(--shadow-1)}
+.u-shadow-2{box-shadow:var(--shadow-2)}
+.u-border-strong{border:1px solid var(--stroke-strong)}
+.u-border-soft{border:1px solid var(--stroke-soft)}
+.u-glass-1{background:var(--glass-1)}
+.u-glass-2{background:var(--glass-2)}
+.u-backdrop{backdrop-filter:blur(18px)}
+.u-nope{pointer-events:none}
 
-@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(20px)}}
-@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-25px)}}
-@keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(10px,-15px)}}
-
-/* App layer (always above visuals) */
+/* ======================================================================
+   LAYOUT WRAPPER
+   ====================================================================== */
 .app{
-  position:relative; z-index:1;
-  max-width:900px; margin:0 auto;
+  position:relative;
+  z-index:1;
+  max-width:960px;
+  margin:0 auto;
   padding:20px clamp(16px,3vw,28px) 40px;
 }
 
-/* Top bar */
-.topbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
-.reset{
-  display:inline-flex; align-items:center; justify-content:center;
-  width:46px; height:46px; border-radius:14px;
-  background:linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
-  border:1px solid var(--soft-stroke); backdrop-filter:blur(10px);
-  box-shadow:var(--shadow); font-size:22px; color:var(--text);
-  transition:transform .15s ease;
+/* ======================================================================
+   TOP BAR + TITLE
+   ====================================================================== */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:8px;
 }
-.reset:active{ transform:scale(.96); }
+.btn-reset{
+  width:48px; height:48px;
+  border-radius:14px;
+  background:rgba(255,255,255,.10);
+  border:1px solid var(--stroke-soft);
+  color:#fff;
+  font-size:22px;
+  transition:transform var(--fast) var(--ease), box-shadow var(--norm) var(--ease);
+  touch-action:manipulation;
+}
+.btn-reset:active{ transform:scale(.96) }
 
-/* Title */
 .title{
-  font-family:"Cairo Play","Changa",system-ui; font-weight:700; line-height:1.1;
-  font-size:clamp(26px,5.6vw,44px); margin:6px 0 14px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  font-family:"Cairo Play","Changa",system-ui;
+  font-weight:700; line-height:1.1;
+  font-size:clamp(26px,5.6vw,44px);
+  margin:12px 0 16px;
+  background:linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
   text-shadow:0 6px 30px rgba(124,58,237,.35);
 }
 
-/* Panels */
+/* ======================================================================
+   PANELS (glass containers)
+   ====================================================================== */
 .panel{
+  border-radius:var(--radius-xl);
   background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-  border:1px solid var(--stroke); border-radius:22px; backdrop-filter:blur(18px);
-  box-shadow:var(--shadow);
-  padding: clamp(14px, 2.5vw, 22px);
-  margin-bottom:18px;
+  border:1px solid var(--stroke-strong);
+  box-shadow:var(--shadow-1);
+  backdrop-filter:blur(18px);
+  padding:16px;
+  margin-bottom:16px;
 }
-.section-title{ color:var(--muted); font-size:clamp(14px,3.2vw,18px); margin:2px 6px 14px; }
+.section-title{
+  color:var(--muted);
+  font-size:clamp(14px,3.2vw,18px);
+  margin:2px 6px 12px;
+}
 
-/* Progress */
+/* ======================================================================
+   PROGRESS BAR
+   ====================================================================== */
 .progress{
-  height:8px; border-radius:14px; overflow:hidden;
-  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.16);
-  margin:6px 6px 16px; position:relative;
+  position:relative;
+  height:8px;
+  border-radius:14px;
+  overflow:hidden;
+  background:rgba(255,255,255,.10);
+  border:1px solid var(--stroke-soft);
+  margin:4px 6px 12px;
 }
-.progress > span{
-  position:absolute; inset:0 0; width:0%;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
+.progress__bar{
+  height:100%;
+  width:0%;
+  border-radius:inherit;
+  background:linear-gradient(90deg, var(--accent-1), var(--accent-2));
   filter:drop-shadow(0 0 10px rgba(124,58,237,.55));
-  border-radius:inherit; transition:width .3s ease;
+  transition:width .28s var(--ease);
 }
 
-/* Grid */
-.choices{ display:grid; grid-template-columns:1fr; gap:14px; }
-@media (min-width:540px){ .choices{ grid-template-columns:1fr 1fr; } }
-@media (min-width:880px){ .choices{ grid-template-columns:1fr 1fr 1fr; } }
+/* ======================================================================
+   CHOICES GRID
+   ====================================================================== */
+.choices{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+@media (min-width:560px){ .choices{ grid-template-columns:1fr 1fr } }
+@media (min-width:900px){ .choices{ grid-template-columns:1fr 1fr 1fr } }
 
-/* Choice card (button) */
+/* ======================================================================
+   CHOICE CARD BUTTON (REAL <button>, iOS-safe)
+   ====================================================================== */
 .card{
-  position:relative; display:block; width:100%;
-  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
-  border-radius:20px; backdrop-filter:blur(10px);
-  padding:18px 18px 16px; overflow:hidden; cursor:pointer;
-  transition: transform .16s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-  text-align:center;
+  appearance:none; -webkit-appearance:none;
+  display:block; width:100%;
+  text-align:center; cursor:pointer; user-select:none;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:var(--radius-lg);
+  padding:18px 16px 16px;
+  transition:
+    transform var(--fast) var(--ease),
+    box-shadow var(--norm) var(--ease),
+    border-color var(--norm) var(--ease),
+    background var(--norm) var(--ease);
+  touch-action:manipulation;
 }
-.card::before{
-  content:""; position:absolute; inset:0; border-radius:inherit; padding:1px; pointer-events:none;
-  background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.08));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor; mask-composite:exclude;
-}
-.card:hover{ transform:translateY(-2px); }
-.card:active{ transform:scale(.98); }
+.card:focus{ outline:2px solid rgba(255,255,255,.25); outline-offset:2px }
+.card:hover{ transform:translateY(-2px) }
+.card:active{ transform:scale(.985) }
 .card.selected{
   border-color:transparent;
-  box-shadow:0 0 0 2px rgba(255,255,255,.25), 0 0 32px 6px rgba(255,43,209,.35);
-  background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+  box-shadow:0 0 0 2px rgba(255,255,255,.25), 0 0 24px 4px rgba(255,43,209,.28);
+  background:rgba(255,255,255,.14);
 }
-.icon{
-  display:grid; place-items:center; width:112px; height:112px; margin:4px auto 10px;
+/* Children must NOT capture taps */
+.card *{ pointer-events:none }
+
+/* Icon box with subtle glass */
+.iconbox{
+  display:grid; place-items:center;
+  width:var(--choice-icon-box); height:var(--choice-icon-box);
+  margin:4px auto 10px;
   border-radius:26px;
   background:
-   radial-gradient(120px 120px at 70% 20%, rgba(255,255,255,.25), rgba(255,255,255,.06)),
-   linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+    radial-gradient(120px 120px at 70% 20%, rgba(255,255,255,.25), rgba(255,255,255,.06)),
+    linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
   border:1px solid rgba(255,255,255,.22);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 10px 25px rgba(0,0,0,.25);
-  font-size:62px; line-height:1;
+  box-shadow: inset 0 0 0 1px var(--inner-stroke), var(--shadow-2);
+  line-height:1;
 }
-.label{ font-size:18px; letter-spacing:.2px; }
+.icon{ font-size:var(--icon-size) }
+.label{ font-size:18px; letter-spacing:.2px }
 
-/* Result card */
-.result{
-  text-align:center; padding:16px;
-}
-.result h3{
-  font-size:clamp(20px,4.5vw,28px); margin:6px 0 10px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
+/* ======================================================================
+   RESULT CARD
+   ====================================================================== */
+.result{ text-align:center; padding:10px 6px }
+.result__title{
+  font-size:clamp(20px,4.4vw,28px);
+  margin:6px 0 8px;
+  background:linear-gradient(90deg, var(--accent-1), var(--accent-2));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
-.result p{ color:#f0eaf7; }
+.result__text{ color:#efeaf7 }
 
-/* Hide utility */
-.hidden{ display:none !important; }
+/* ======================================================================
+   ACCESSIBILITY HELPERS (optional but explicit)
+   ====================================================================== */
+.sr-only{
+  position:absolute !important;
+  height:1px; width:1px; overflow:hidden;
+  clip:rect(1px,1px,1px,1px); white-space:nowrap; border:0; padding:0; margin:-1px;
+}
 
-@media (prefers-reduced-motion: reduce){ .blob{animation:none} }
+/* ======================================================================
+   REDUCE MOTION
+   ====================================================================== */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto }
+  .card:hover{ transform:none }
+}
 </style>
 </head>
 <body>
 
-<canvas id="twinkle" aria-hidden="true"></canvas>
-<div class="blob b1" aria-hidden="true"></div>
-<div class="blob b2" aria-hidden="true"></div>
-<div class="blob b3" aria-hidden="true"></div>
+<!-- ==============================================================
+     APP WRAPPER
+     ============================================================== -->
+<div id="App" class="app u-max">
 
-<div class="app" id="app">
+  <!-- TOPBAR -->
   <div class="topbar">
-    <button class="reset" id="resetBtn" title="إعادة">⟳</button>
+    <button id="ResetBtn" class="btn-reset" type="button" title="إعادة">⟳</button>
   </div>
 
+  <!-- TITLE -->
   <h1 class="title">شنسوي الويكند؟</h1>
 
-  <!-- STEP 1 -->
-  <section id="step1" class="panel" aria-label="الخطوة الأولى">
-    <div class="progress"><span id="bar1" style="width:33%"></span></div>
-    <h2 class="section-title">منو المجموعة؟</h2>
-    <div class="choices" id="choicesStep1"></div>
+  <!-- =========================
+       STEP 1
+       ========================= -->
+  <section id="Step1" class="panel" aria-labelledby="Step1Title">
+    <div class="progress u-mb-12"><span id="Bar1" class="progress__bar" style="width:33%"></span></div>
+    <h2 id="Step1Title" class="section-title">منو المجموعة؟</h2>
+
+    <div id="Choices1" class="choices u-mb-8" role="group" aria-label="اختيار المجموعة">
+      <!-- Cards injected by JS -->
+    </div>
+    <p class="u-muted u-text-center u-mb-0">اختر المجموعة عشان ننتقل للخطوة التالية</p>
   </section>
 
-  <!-- STEP 2 -->
-  <section id="step2" class="panel hidden" aria-label="الخطوة الثانية">
-    <div class="progress"><span id="bar2" style="width:66%"></span></div>
-    <h2 class="section-title">الجو العام شنو ودّكم؟</h2>
-    <div class="choices" id="choicesStep2"></div>
+  <!-- =========================
+       STEP 2
+       ========================= -->
+  <section id="Step2" class="panel u-hidden" aria-labelledby="Step2Title">
+    <div class="progress u-mb-12"><span id="Bar2" class="progress__bar" style="width:66%"></span></div>
+    <h2 id="Step2Title" class="section-title">الجو العام شنو ودّكم؟</h2>
+
+    <div id="Choices2" class="choices u-mb-8" role="group" aria-label="اختيار نوع النشاط">
+      <!-- Cards injected by JS -->
+    </div>
+    <p class="u-muted u-text-center u-mb-0">اختيارك هنا يحدد الاقتراح النهائي</p>
   </section>
 
-  <!-- RESULT -->
-  <section id="stepResult" class="panel hidden" aria-live="polite" aria-label="النتيجة">
-    <div class="progress"><span id="bar3" style="width:100%"></span></div>
-    <div class="result" id="resultBox">
-      <h3>النتيجة</h3>
-      <p>اختر خياراتك لنعرض لك اقتراح جميل للويكند ✨</p>
+  <!-- =========================
+       RESULT
+       ========================= -->
+  <section id="StepResult" class="panel u-hidden" aria-live="polite" aria-labelledby="ResultTitle">
+    <div class="progress u-mb-12"><span id="Bar3" class="progress__bar" style="width:100%"></span></div>
+    <div id="ResultBox" class="result">
+      <h3 id="ResultTitle" class="result__title">النتيجة</h3>
+      <p class="result__text">اختر خياراتك لنعرض لك اقتراح جميل للويكند ✨</p>
     </div>
   </section>
+
+  <!-- FOOTNOTE -->
+  <p class="u-text-center u-muted u-mb-0">تصميم زجاجي — متدرّجات ناعمة — جاهز للتوسعة لخطوات أكثر</p>
 </div>
 
 <script>
-/* ---------- Data ---------- */
-const STEP1 = [
-  { id:'kids',   emoji:'👶',  label:'أطفال' },
-  { id:'adults', emoji:'🧑‍🤝‍🧑', label:'بالغين' },
+/* ======================================================================
+   DATA: explicit, easy to extend
+   ====================================================================== */
+const DATA_STEP1 = [
+  { id:'kids',   emoji:'👶',         label:'أطفال' },
+  { id:'adults', emoji:'🧑‍🤝‍🧑',    label:'بالغين' },
   { id:'mixed',  emoji:'👨‍👩‍👧‍👦', label:'مخلوط' },
 ];
 
-const STEP2 = {
+const DATA_STEP2 = {
   kids: [
     { id:'active', emoji:'🎡', label:'حركة وفعاليات' },
     { id:'chill',  emoji:'🎨', label:'فني وهادئ' },
-    { id:'eat',    emoji:'🍔', label:'أكل ولذّة' },
+    { id:'eat',    emoji:'🍔', label:'أكل ولذّة' }
   ],
   adults: [
-    { id:'lux',    emoji:'🥂', label:'فخم وراقي' },
-    { id:'out',    emoji:'🌆', label:'طلعة وجو' },
-    { id:'games',  emoji:'🎲', label:'ألعاب وتحدي' },
+    { id:'lux',   emoji:'🥂', label:'فخم وراقي' },
+    { id:'out',   emoji:'🌆', label:'طلعة وجو' },
+    { id:'games', emoji:'🎲', label:'ألعاب وتحدي' }
   ],
   mixed: [
-    { id:'park',   emoji:'🌳', label:'حديقة ونشاط' },
-    { id:'mall',   emoji:'🛍️', label:'مول وتسوّق' },
-    { id:'home',   emoji:'🏠', label:'بيت وترفيه' },
+    { id:'park', emoji:'🌳', label:'حديقة ونشاط' },
+    { id:'mall', emoji:'🛍️', label:'مول وتسوّق' },
+    { id:'home', emoji:'🏠', label:'بيت وترفيه' }
   ]
 };
 
-/* Simple suggestion map (replace with your real list later) */
-const SUGGESTIONS = {
+const DATA_SUGGESTIONS = {
   'kids|active': 'كيدزانيا أو ملاهي داخليّة + آيسكريم بعدين 🍦',
   'kids|chill':  'ورشة رسم / صلصال ثم كافيه لطيف للعائلة ☕️',
   'kids|eat':    'مطعم عائلي مع منطقة لعب، وختموها بحلو 😋',
@@ -245,108 +383,141 @@ const SUGGESTIONS = {
   'mixed|home':  'ليلة ألعاب بالبيت + سناكات وسينما منزلية 🎬'
 };
 
-/* ---------- Helpers ---------- */
-const $ = sel => document.querySelector(sel);
+/* ======================================================================
+   STATE
+   ====================================================================== */
+let state = {
+  group:null,
+  mood:null
+};
+
+/* ======================================================================
+   DOM HELPERS
+   ====================================================================== */
+const $  = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+function setHidden(el, hidden){
+  el.classList.toggle('u-hidden', !!hidden);
+}
+function setProgress(el, pct){
+  el.style.width = pct;
+}
+
+/* Create a safe, clickable card button */
 function createCard(option, onClick){
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'card';
-  btn.innerHTML = `
-    <div class="icon" aria-hidden="true">${option.emoji}</div>
-    <div class="label">${option.label}</div>
-  `;
-  btn.addEventListener('click', () => onClick(option, btn), {passive:true});
+  btn.setAttribute('aria-label', option.label);
+
+  /* Inner content – cannot steal taps */
+  const box = document.createElement('div');
+  box.className = 'iconbox';
+  const icon = document.createElement('div');
+  icon.className = 'icon';
+  icon.textContent = option.emoji;
+  const label = document.createElement('div');
+  label.className = 'label';
+  label.textContent = option.label;
+
+  /* Build */
+  box.appendChild(icon);
+  btn.appendChild(box);
+  btn.appendChild(label);
+
+  /* Reliable click binding for Safari */
+  btn.onclick = () => onClick(btn, option);
+
   return btn;
 }
-function show(id){ $(id).classList.remove('hidden'); }
-function hide(id){ $(id).classList.add('hidden'); }
-function setBar(el, w){ el.style.width = w; }
 
-/* ---------- Render Step 1 ---------- */
-const s1 = $('#choicesStep1');
-STEP1.forEach(opt=>{
-  s1.appendChild(createCard(opt, (o,btn)=>{
-    // select visual
-    s1.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
-    btn.classList.add('selected');
-    // progress to step 2
-    buildStep2(o.id);
-  }));
-});
+/* ======================================================================
+   RENDER: STEP 1
+   ====================================================================== */
+const Step1      = $('#Step1');
+const Step2      = $('#Step2');
+const StepResult = $('#StepResult');
+const Choices1   = $('#Choices1');
+const Choices2   = $('#Choices2');
 
-/* ---------- Build & Show Step 2 ---------- */
-let chosenGroup = null, chosenMood = null;
+function renderStep1(){
+  Choices1.innerHTML = '';
+  DATA_STEP1.forEach(opt=>{
+    Choices1.appendChild(createCard(opt, (btn, option)=>{
+      selectCard(Choices1, btn);
+      state.group = option.id;
+      buildStep2(option.id);
+    }));
+  });
+}
+renderStep1();
 
+/* ======================================================================
+   RENDER: STEP 2
+   ====================================================================== */
 function buildStep2(groupId){
-  chosenGroup = groupId; chosenMood = null;
-  const container = $('#choicesStep2');
-  container.innerHTML = '';
-  (STEP2[groupId] || []).forEach(opt=>{
-    container.appendChild(createCard(opt, (o,btn)=>{
-      container.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
-      btn.classList.add('selected');
-      chosenMood = o.id;
+  Choices2.innerHTML = '';
+  const list = DATA_STEP2[groupId] || [];
+  list.forEach(opt=>{
+    Choices2.appendChild(createCard(opt, (btn, option)=>{
+      selectCard(Choices2, btn);
+      state.mood = option.id;
       showResult();
     }));
   });
-  hide('#stepResult');
-  show('#step2');
-  setBar($('#bar2'), '66%');
-  window.scrollTo({top: $('#step2').offsetTop - 12, behavior:'smooth'});
+
+  setHidden(Step2, false);
+  setHidden(StepResult, true);
+  setProgress($('#Bar2'), '66%');
+
+  /* Scroll to Step 2 */
+  window.scrollTo({ top: Step2.offsetTop - 10, behavior:'smooth' });
 }
 
-/* ---------- Show Result ---------- */
+/* ======================================================================
+   RESULT
+   ====================================================================== */
 function showResult(){
-  const key = `${chosenGroup}|${chosenMood}`;
-  const text = SUGGESTIONS[key] || 'اختيارات جميلة! بتجهيز لكم اقتراح مميز.';
-  $('#resultBox').innerHTML = `
-    <h3>اقتراحنا للويكند</h3>
-    <p>${text}</p>
+  const key  = `${state.group}|${state.mood}`;
+  const text = DATA_SUGGESTIONS[key] || 'اختيارات جميلة! بتجهيز لكم اقتراح مميز.';
+  $('#ResultBox').innerHTML = `
+    <h3 class="result__title">اقتراحنا للويكند</h3>
+    <p class="result__text">${text}</p>
   `;
-  show('#stepResult');
-  setBar($('#bar3'), '100%');
-  window.scrollTo({top: $('#stepResult').offsetTop - 12, behavior:'smooth'});
+  setHidden(StepResult, false);
+  setProgress($('#Bar3'), '100%');
+  window.scrollTo({ top: StepResult.offsetTop - 10, behavior:'smooth' });
 }
 
-/* ---------- Reset ---------- */
-$('#resetBtn').addEventListener('click', ()=>{
-  // visuals
-  document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
-  // state
-  chosenGroup = null; chosenMood = null;
-  // sections
-  show('#step1'); hide('#step2'); hide('#stepResult');
-  setBar($('#bar1'), '33%'); setBar($('#bar2'), '0%'); setBar($('#bar3'), '0%');
-  window.scrollTo({top:0, behavior:'smooth'});
-});
+/* ======================================================================
+   SELECT ONE IN A GROUP
+   ====================================================================== */
+function selectCard(container, clicked){
+  $$('.card', container).forEach(c=>c.classList.remove('selected'));
+  clicked.classList.add('selected');
+}
 
-/* ---------- Twinkle (non-blocking) ---------- */
-(function twinkle(){
-  const c = document.getElementById('twinkle');
-  const ctx = c.getContext('2d',{alpha:true});
-  let w,h,stars=[];
-  function resize(){
-    w = c.width = window.innerWidth;
-    h = c.height = window.innerHeight;
-    stars = Array.from({length: Math.min(60, Math.floor(w*h/18000))}, () => ({
-      x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.6+.2,
-      a: Math.random(), v: (Math.random()*0.6+0.2)/100
-    }));
-  }
-  window.addEventListener('resize', resize, {passive:true}); resize();
-  (function loop(){
-    ctx.clearRect(0,0,w,h);
-    for(const s of stars){
-      s.a += s.v; const alpha = (1+Math.sin(s.a*6.283))*0.35 + 0.05;
-      ctx.beginPath();
-      const g = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*3);
-      g.addColorStop(0,`rgba(255,255,255,${alpha})`);
-      g.addColorStop(1,'rgba(255,255,255,0)');
-      ctx.fillStyle=g; ctx.arc(s.x,s.y,s.r*3,0,Math.PI*2); ctx.fill();
-    }
-    requestAnimationFrame(loop);
-  })();
-})();
+/* ======================================================================
+   RESET
+   ====================================================================== */
+$('#ResetBtn').onclick = ()=>{
+  state.group = null; state.mood = null;
+  $$('.card').forEach(c=>c.classList.remove('selected'));
+  setHidden(Step2, true);
+  setHidden(StepResult, true);
+  setProgress($('#Bar1'), '33%');
+  setProgress($('#Bar2'), '0%');
+  setProgress($('#Bar3'), '0%');
+  window.scrollTo({top:0, behavior:'smooth'});
+};
+
+/* ======================================================================
+   SAFARI / iOS RELIABILITY NOTES
+   - Using real <button> elements with direct .onclick (not passive listeners)
+   - No fixed overlays above the buttons
+   - All inner elements have pointer-events: none via CSS (.card *)
+   ====================================================================== */
 </script>
 </body>
 </html>
